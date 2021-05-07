@@ -27,4 +27,8 @@
     <ProjectReference Include="..\MyTravelBook.Dal\MyTravelBook.Dal.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\images\index-page.jpg" />
+  </ItemGroup>
+
 </Project>
