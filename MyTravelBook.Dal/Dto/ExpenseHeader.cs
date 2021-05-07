@@ -1,0 +1,14 @@
+﻿using System.Collections.Generic;
+
+namespace MyTravelBook.Dal.Dto
+{
+    public class ExpenseHeader
+    {
+        public int Id { get; set; }
+        public string Location { get; set; }
+        public string ExpenseName { get; set; }
+        public string Description { get; set; }
+        public float Price { get; set; }
+        public List<int>? ParticipantIds { get; set; }
+    }
+}
