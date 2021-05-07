@@ -33,7 +33,7 @@ namespace MyTravelBook.Dal.Services
             DbContext.TripExpenses.Add(
                 new TripExpense
                 {
-                    TripId = expenseHeader.TripId,
+                    TripId = (int)expenseHeader.TripId,
                     ExpenseId = expense.Id
                 });
 
