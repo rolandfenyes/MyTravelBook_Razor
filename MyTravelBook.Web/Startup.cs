@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,8 @@ using MyTravelBook.Dal.Entities;
 using MyTravelBook.Dal.SeedInterfaces;
 using MyTravelBook.Dal.SeedService;
 using MyTravelBook.Dal.Services;
+using MyTravelBook.Web.Services;
+using MyTravelBook.Web.Settings;
 
 namespace MyTravelBook.Web
 {
@@ -38,6 +41,11 @@ namespace MyTravelBook.Web
             services.AddIdentity<User, IdentityRole<int>>()
                 .AddEntityFrameworkStores<MyDbContext>()
                 .AddDefaultTokenProviders();
+
+            // SMTP server properties from appsettings.json/MailSettings
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+
+            services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddScoped<IRoleSeedService, RoleSeedService>()
                 .AddScoped<IUserSeedService, UserSeedService>();
