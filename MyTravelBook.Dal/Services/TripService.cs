@@ -1,9 +1,11 @@
-﻿using MyTravelBook.Dal.Dto;
+﻿using Microsoft.EntityFrameworkCore;
+using MyTravelBook.Dal.Dto;
 using MyTravelBook.Dal.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MyTravelBook.Dal.Services
 {
@@ -12,11 +14,13 @@ namespace MyTravelBook.Dal.Services
         public MyDbContext DbContext { get; }
         public TravelService TravelService { get; set; }
         public AccommodationService AccommodationService { get; set; }
-        public TripService(MyDbContext dbContext, TravelService travelService, AccommodationService accommodationService)
+        public ExpenseService ExpenseService { get; set; }
+        public TripService(MyDbContext dbContext, TravelService travelService, AccommodationService accommodationService, ExpenseService expenseService)
         {
             DbContext = dbContext;
             TravelService = travelService;
             AccommodationService = accommodationService;
+            ExpenseService = expenseService;
         }
 
         // Create
@@ -53,17 +57,7 @@ namespace MyTravelBook.Dal.Services
             var expensesOfTrip = new ExpensesHeader();
             foreach (var expenseId in expenseIds)
             {
-                var expense = DbContext.Expenses.Where(t => t.Id == expenseId.ExpenseId).FirstOrDefault();
-                expensesOfTrip.Expenses.Add(
-                    new ExpenseHeader
-                    {
-                        Id = expense.Id,
-                        Location = expense.Location,
-                        ExpenseName = expense.ExpenseName,
-                        Description = expense.Description,
-                        Price = expense.Price,
-                        ParticipantIds = null
-                    });
+                expensesOfTrip.Expenses.Add(ExpenseService.GetExpense(expenseId.ExpenseId));
             }
             return expensesOfTrip;
         }
@@ -122,9 +116,17 @@ namespace MyTravelBook.Dal.Services
 
         }
 
-        public IEnumerable<TripHeader> GetTrips()
+        public async Task<IEnumerable<TripHeader>> GetTrips(int userId)
         {
-            var tripEntities= DbContext.Trips.ToList();
+            var tripsOfUser = await DbContext.TripParticipants.Where(t => t.UserId == userId).ToListAsync();
+
+            var tripEntities = new List<Trip>();
+
+            foreach (var id in tripsOfUser)
+            {
+                tripEntities.Add(DbContext.Trips.Where(t => t.Id == id.TripId).FirstOrDefault());
+            }
+
             var tripList = new List<TripHeader>();
             foreach (var trip in tripEntities) {
                 var location = GetLocation(trip.Id);

@@ -32,7 +32,8 @@ namespace MyTravelBook.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
+            services.AddRazorPages()
+                .AddRazorRuntimeCompilation();
 
             services.AddDbContext<MyDbContext>(
                 o => o.UseSqlServer(Configuration.GetConnectionString(nameof(MyDbContext)))
@@ -59,7 +60,8 @@ namespace MyTravelBook.Web
 
             services.AddScoped<TripService>()
                 .AddScoped<TravelService>()
-                .AddScoped<AccommodationService>();
+                .AddScoped<AccommodationService>()
+                .AddScoped<ExpenseService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

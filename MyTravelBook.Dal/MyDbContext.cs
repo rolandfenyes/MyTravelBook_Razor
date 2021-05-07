@@ -59,6 +59,21 @@ namespace MyTravelBook.Dal
                     TripOwnerId = 1
                 });
 
+            // Trip - Participants
+            builder.Entity<TripParticipants>().HasData(
+                new TripParticipants
+                {
+                    Id = 1,
+                    TripId = 1,
+                    UserId = 1
+                },
+                new TripParticipants
+                {
+                    Id = 2,
+                    TripId = 2,
+                    UserId = 1
+                });
+
             // new Accommodations
             builder.Entity<Accommodation>().HasData(
                 new Accommodation
