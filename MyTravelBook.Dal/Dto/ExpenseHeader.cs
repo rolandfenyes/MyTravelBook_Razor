@@ -5,6 +5,7 @@ namespace MyTravelBook.Dal.Dto
     public class ExpenseHeader
     {
         public int Id { get; set; }
+        public int? TripId { get; set; }
         public string Location { get; set; }
         public string ExpenseName { get; set; }
         public string Description { get; set; }
