@@ -19,48 +19,48 @@
         @foreach (var trip in Model.Trips)
         {
             <div class="card mb-3 glassy">
-                <div class="row no-gutters content">
-                    <div class="col-4">
-                        <div class="row no-gutters">
-                            <h6>
-                                Name of trip
-                            </h6>
-                        </div>
-                        <div class="row no-gutters">
-                            <h3>
-                                <a>
+                <a class="card-link" asp-page="Trip" asp-route-id="@trip.Id">
+                    <div class="row no-gutters content">
+                        <div class="col-4">
+                            <div class="row no-gutters">
+                                <h6>
+                                    Name of trip
+                                </h6>
+                            </div>
+                            <div class="row no-gutters">
+                                <h3>
                                     @trip.TripName
-                                </a>
-                            </h3>
-                        </div>
+                                </h3>
+                            </div>
 
-                    </div>
-                    <div class="col-4">
-                        <div class="row no-gutters">
-                            <h6>
-                                Days until end
-                            </h6>
                         </div>
-                        <div class="row no-gutters">
-                            <h3>
-                                @trip.Progress
-                            </h3>
-                        </div>
+                        <div class="col-4">
+                            <div class="row no-gutters">
+                                <h6>
+                                    Days until end
+                                </h6>
+                            </div>
+                            <div class="row no-gutters">
+                                <h3>
+                                    @trip.Progress
+                                </h3>
+                            </div>
 
-                    </div>
-                    <div class="col-4">
-                        <div class="row no-gutters">
-                            <h6>
-                                Last known location
-                            </h6>
                         </div>
-                        <div class="row no-gutters">
-                            <h3>
-                                @trip.Location
-                            </h3>
+                        <div class="col-4">
+                            <div class="row no-gutters">
+                                <h6>
+                                    Last known location
+                                </h6>
+                            </div>
+                            <div class="row no-gutters">
+                                <h3>
+                                    @trip.Location
+                                </h3>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
         }
 
@@ -69,7 +69,9 @@
     <script type="text/javascript">
         VanillaTilt.init(document.querySelectorAll(".glassy"), {
             max: 5,
-            speed: 400
+            speed: 400,
+            glare: true,
+            "max-glare": 0.5
         });
     </script>
 </body >

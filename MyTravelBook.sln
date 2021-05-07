@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTravelBook.Web", "MyTravelBook.Web\MyTravelBook.Web.csproj", "{65B874BE-0D08-44F5-98B8-79DA4ECBD0D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyTravelBook.Web", "MyTravelBook.Web\MyTravelBook.Web.csproj", "{65B874BE-0D08-44F5-98B8-79DA4ECBD0D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTravelBook.Dal", "MyTravelBook.Dal\MyTravelBook.Dal.csproj", "{2E75CA7B-582D-415B-8F1E-BA8BDE4CBE7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyTravelBook.Dal", "MyTravelBook.Dal\MyTravelBook.Dal.csproj", "{2E75CA7B-582D-415B-8F1E-BA8BDE4CBE7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

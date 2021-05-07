@@ -34,3 +34,12 @@
 .glassy h6 {
     color: rgba(255, 255, 255, 0.9);
 }
+
+.glassy a {
+    color: white !important;
+}
+
+.card-link {
+    color: white;
+    text-underline-position: unset;
+}

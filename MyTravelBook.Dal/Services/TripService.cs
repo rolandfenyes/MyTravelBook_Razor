@@ -116,6 +116,18 @@ namespace MyTravelBook.Dal.Services
 
         }
 
+        public TripHeader GetTrip(int id)
+        {
+            var trip = DbContext.Trips.Where(t => t.Id == id).FirstOrDefault();
+            return new TripHeader
+            {
+                Id = trip.Id,
+                Location = null,
+                Progress = null,
+                TripName = trip.TripName
+            };
+        }
+
         public async Task<IEnumerable<TripHeader>> GetTrips(int userId)
         {
             var tripsOfUser = await DbContext.TripParticipants.Where(t => t.UserId == userId).ToListAsync();
