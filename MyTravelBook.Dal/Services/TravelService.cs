@@ -69,7 +69,7 @@ namespace MyTravelBook.Dal.Services
             return new TravelHeader
                 {
                     Id = travel.Id,
-                    TripId = null,
+                    TripId = DbContext.TripTravels.Where(t => t.TravelId == travelId).FirstOrDefault().TripId,
                     Departure = travel.Departure,
                     Destination = travel.Destination,
                     TransportType = travel.TransportType.ToString(),

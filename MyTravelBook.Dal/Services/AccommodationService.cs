@@ -63,6 +63,7 @@ namespace MyTravelBook.Dal.Services
             return new AccommodationHeader
                 {
                     Id = accommodation.Id,
+                    TripId = DbContext.TripAccommodations.Where(a => a.AccommodationId == accommodationId).FirstOrDefault().TripId,
                     Location = accommodation.Location,
                     Starts = accommodation.Starts,
                     Ends = accommodation.Ends,

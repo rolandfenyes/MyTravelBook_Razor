@@ -74,6 +74,25 @@ namespace MyTravelBook.Dal
                     UserId = 1
                 });
 
+            // new Document
+            builder.Entity<Document>().HasData(
+                new Document
+                {
+                    Id = 1,
+                    IdCard = true,
+                    InternationalPassport = false,
+                    DrivingLicense = true,
+                    HealthCard = true
+                },
+                new Document
+                {
+                    Id = 2,
+                    IdCard = true,
+                    InternationalPassport = false,
+                    DrivingLicense = true,
+                    HealthCard = true
+                });
+
             // new Accommodations
             builder.Entity<Accommodation>().HasData(
                 new Accommodation

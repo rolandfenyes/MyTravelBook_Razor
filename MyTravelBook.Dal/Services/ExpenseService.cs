@@ -64,7 +64,7 @@ namespace MyTravelBook.Dal.Services
             return new ExpenseHeader
             {
                 Id = expense.Id,
-                TripId = null,
+                TripId = DbContext.TripExpenses.Where(e => e.ExpenseId == expenseId).FirstOrDefault().TripId,
                 Location = expense.Location,
                 ExpenseName = expense.ExpenseName,
                 Description = expense.Description,

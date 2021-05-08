@@ -55,6 +55,7 @@ namespace MyTravelBook.Dal.Services
         {
             var expenseIds = DbContext.TripExpenses.Where(t => t.TripId == tripId).ToList();
             var expensesOfTrip = new ExpensesHeader();
+            expensesOfTrip.Expenses = new List<ExpenseHeader>();
             foreach (var expenseId in expenseIds)
             {
                 expensesOfTrip.Expenses.Add(ExpenseService.GetExpense(expenseId.ExpenseId));
@@ -66,6 +67,7 @@ namespace MyTravelBook.Dal.Services
         {
             var accommodationIds = DbContext.TripAccommodations.Where(t => t.TripId == tripId).ToList();
             var accommodationsOfTrip = new AccommodationsHeader();
+            accommodationsOfTrip.Accommodations = new List<AccommodationHeader>();
             foreach (var accommodationId in accommodationIds)
             {
                 accommodationsOfTrip.Accommodations.Add(AccommodationService.GetAccommodation(tripId));
@@ -77,6 +79,7 @@ namespace MyTravelBook.Dal.Services
         {
             var travelIds= DbContext.TripTravels.Where(t => t.TripId == tripId).ToList();
             var travelsOfTrip = new TravelsHeader();
+            travelsOfTrip.Travels = new List<TravelHeader>();
             foreach (var travelId in travelIds)
             {
                 travelsOfTrip.Travels.Add(TravelService.GetTravel(travelId.TravelId));
@@ -84,21 +87,22 @@ namespace MyTravelBook.Dal.Services
             return travelsOfTrip;
         }
 
-        public IEnumerable<FriendHeader> GetParticipantsOfTrip(int tripId)
+        public FriendsHeader GetParticipantsOfTrip(int tripId)
         {
             var participants = DbContext.TripParticipants.Where(t => t.TripId == tripId).ToList();
+            var participantHeaders = new FriendsHeader();
+            participantHeaders.FriendsList = new List<FriendHeader>();
 
-            var participantsInTrip = new List<FriendHeader>();
             foreach (var user in participants)
             {
-                participantsInTrip.Add(
+                participantHeaders.FriendsList.Add(
                     new FriendHeader
                     {
                         FriendId = user.UserId,
                         Nickname = DbContext.Users.Where(u => u.Id == user.UserId).FirstOrDefault().Name
                     });
             }
-            return participantsInTrip;
+            return participantHeaders;
         }
 
         public TripDetailsHeader GetDetailsOfTrip(int tripId)

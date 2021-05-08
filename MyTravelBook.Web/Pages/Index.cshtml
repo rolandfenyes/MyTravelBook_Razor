@@ -13,12 +13,12 @@
     <link href="~/css/style.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body class="index-background">
+<body class="index-background background">
     @if (SignInManager.IsSignedIn(User))
     {
         @foreach (var trip in Model.Trips)
         {
-            <div class="card mb-3 glassy">
+            <div class="card mb-3 glassy trip-row">
                 <a class="card-link" asp-page="Trip" asp-route-id="@trip.Id">
                     <div class="row no-gutters content">
                         <div class="col-4">

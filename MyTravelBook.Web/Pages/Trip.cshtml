@@ -1,10 +1,128 @@
 ﻿@page
 @model MyTravelBook.Web.Pages.TripModel
 @{
+    ViewData["Title"] = Model.Trip.TripName;
 }
+<html>
+<head>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" />
+</head>
 
-<body>
-    <h1>
-        @Model.Trip.TripName
-    </h1>
+<body class="trip-background background">
+    <div class="row no-gutters bubble-row">
+        <div class="col-2 glassy ml-auto mr-auto">
+            <div class="container">
+                <h3>
+                    Trip details
+                </h3>
+                <h6>
+                    Documents
+                </h6>
+                <div class="check-boxes">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="idcardCheck" checked="@Model.TripDetails.IDCard">
+                        <label class="form-check-label" for="idcardCheck">
+                            ID card
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="internationalPassportCheck" checked="@Model.TripDetails.InternationalPassport">
+                        <label class="form-check-label" for="internationalPassportCheck">
+                            International Passport
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="drivingLicenseCheck" checked="@Model.TripDetails.DrivingLicense">
+                        <label class="form-check-label" for="drivingLicenseCheck">
+                            Driving license
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="healthCardCheck" checked="@Model.TripDetails.HealthCard">
+                        <label class="form-check-label" for="healthCardCheck">
+                            Health card
+                        </label>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="col-6 glassy ml-auto mr-auto">
+            <div class="container">
+                <h1>
+                    @Model.Trip.TripName
+                </h1>
+                <h5>
+                    Overall
+                </h5>
+                <div class="row no-gutters">
+                    <div class="col-3">
+                        Location
+                    </div>
+                    <div class="col-2">
+                        Nights
+                    </div>
+                    <div class="col-1">
+                        Price
+                    </div>
+                    <div class="col-2">
+                        Travel costs
+                    </div>
+                    <div class="col-2">
+                        Expenses
+                    </div>
+                    <div class="col-2">
+                        In total
+                    </div>
+                </div>
+                @foreach (var travel in Model.Travels.Travels)
+                {
+                    <div class="row no-gutters">
+                        <div class="col-3">
+                            @travel.Destination
+                        </div>
+                        <div class="col-2">
+                            @Model.GetNightsAtDestination(travel.Destination)
+                        </div>
+                        <div class="col-1">
+                            @Model.GetAccommodationFees(travel.Destination) €
+                        </div>
+                        <div class="col-2">
+                            @Model.GetTravelFees(travel.Destination) €
+                        </div>
+                        <div class="col-2">
+                            @Model.GetExpenses(travel.Destination) €
+                        </div>
+                        <div class="col-2">
+                            @Model.GetTotal(travel.Destination) €
+                        </div>
+                    </div>
+                }
+            </div>
+            
+        </div>
+        <div class="col-2 glassy ml-auto mr-auto">
+            <div class="container">
+                <h3>
+                    Participants
+                </h3>
+                @foreach (var user in Model.Participants.FriendsList)
+                {
+                    <div>
+                        <h5>
+                            @user.Nickname
+                        </h5>
+                    </div>
+                }
+                <a class="add-btn btn btn-dark">
+                    Add
+                </a>
+            </div>
+            
+        </div>
+    </div>
+    
+    
 </body>
+</html>
+
