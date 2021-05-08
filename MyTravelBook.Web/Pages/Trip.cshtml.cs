@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MyTravelBook.Dal.Dto;
 using MyTravelBook.Dal.Entities;
 using MyTravelBook.Dal.Services;
@@ -25,6 +26,7 @@ namespace MyTravelBook.Web.Pages
         [BindProperty (SupportsGet = true)]
         public int Id { get; set; }
 
+
         public int UserId{ get; set; }
 
         public TripModel(TripService tripService, UserManager<User> userManager)
@@ -36,7 +38,6 @@ namespace MyTravelBook.Web.Pages
         public async Task<IActionResult> OnGet()
         {
             Trip = this.tripService.GetTrip(Id);
-            TripDetails = this.tripService.GetDetailsOfTrip(Id);
             Travels = this.tripService.GetTravelsOfTrip(Id);
             Accommodations = this.tripService.GetAccommodationsOfTrip(Id);
             Expenses = this.tripService.GetExpensesOfTrip(Id);

@@ -1,7 +1,7 @@
 ﻿@page
 @model MyTravelBook.Web.Pages.TripModel
 @{
-    ViewData["Title"] = Model.Trip.TripName;
+    //ViewData["Title"] = Model.Trip.TripName;
 }
 <html>
 <head>
@@ -19,32 +19,9 @@
                     Documents
                 </h6>
                 <div class="check-boxes">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="idcardCheck" checked="@Model.TripDetails.IDCard">
-                        <label class="form-check-label" for="idcardCheck">
-                            ID card
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="internationalPassportCheck" checked="@Model.TripDetails.InternationalPassport">
-                        <label class="form-check-label" for="internationalPassportCheck">
-                            International Passport
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="drivingLicenseCheck" checked="@Model.TripDetails.DrivingLicense">
-                        <label class="form-check-label" for="drivingLicenseCheck">
-                            Driving license
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="healthCardCheck" checked="@Model.TripDetails.HealthCard">
-                        <label class="form-check-label" for="healthCardCheck">
-                            Health card
-                        </label>
-                    </div>
                 </div>
-                
+
+
             </div>
         </div>
         <div class="col-6 glassy ml-auto mr-auto">
