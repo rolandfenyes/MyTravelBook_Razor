@@ -26,8 +26,13 @@ namespace MyTravelBook.Web.Pages
         [BindProperty (SupportsGet = true)]
         public int Id { get; set; }
 
-
         public int UserId{ get; set; }
+
+        [BindProperty]
+        public TravelHeader NewTravel { get; set; }
+
+        [BindProperty]
+        public AccommodationHeader NewAccommodation { get; set; }
 
         public TripModel(TripService tripService, UserManager<User> userManager)
         {

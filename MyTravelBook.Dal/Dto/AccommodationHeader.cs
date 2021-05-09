@@ -14,5 +14,12 @@ namespace MyTravelBook.Dal.Dto
         public string AccommodationType { get; set; }
         public float PricePerNight { get; set; }
         public List<int>? ParticipantIds { get; set; }
+
+        public string StartDay { get; set; }
+        public string StartMonth { get; set; }
+        public string StartYear { get; set; }
+        public string EndDay { get; set; }
+        public string EndMonth { get; set; }
+        public string EndYear { get; set; }
     }
 }

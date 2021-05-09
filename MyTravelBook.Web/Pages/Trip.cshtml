@@ -10,7 +10,7 @@
 
 <body class="trip-background background">
     <div class="row no-gutters bubble-row">
-        <div class="col-2 glassy ml-auto mr-auto">
+        <div class="col-3 glassy mr-auto">
             <div class="container">
                 <h3>
                     Trip details
@@ -24,7 +24,7 @@
 
             </div>
         </div>
-        <div class="col-6 glassy ml-auto mr-auto">
+        <div class="col-5 glassy ml-auto mr-auto">
             <div class="container">
                 <h1>
                     @Model.Trip.TripName
@@ -76,9 +76,9 @@
                     </div>
                 }
             </div>
-            
+
         </div>
-        <div class="col-2 glassy ml-auto mr-auto">
+        <div class="col-3 glassy ml-auto">
             <div class="container">
                 <h3>
                     Participants
@@ -95,11 +95,347 @@
                     Add
                 </a>
             </div>
-            
+
         </div>
     </div>
-    
-    
+    <div class="title-row row no-gutters mt-5">
+        <h1 class="col-12">
+            Trip Diary
+        </h1>
+    </div>
+    <div class="row no-gutters bubble-row mt-5">
+        <div class="col-3 glassy mr-auto">
+            <div class="container">
+                <h3>
+                    Travels
+                </h3>
+                <div class="row no-gutters">
+                    <div class="col-4 ml-auto mr-auto">
+                        Departure
+                    </div>
+                    <div class="col-1 ml-auto mr-auto">
+                        
+                    </div>
+                    <div class="col-4 ml-auto mr-auto">
+                        Destination
+                    </div>
+                </div>
+                @foreach (var travel in Model.Travels.Travels)
+                {
+                    <div class="row no-gutters selectable-row">
+                        <div class="col-4 ml-auto mr-auto">
+                            @travel.Departure
+                        </div>
+                        <div class="col-1 ml-auto mr-auto">
+                            ->
+                        </div>
+                        <div class="col-4 ml-auto mr-auto">
+                            @travel.Destination
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-5 glassy ml-auto mr-auto">
+            <div class="container">
+                <h3>
+                    Travel manager
+                </h3>
+                <div class="row">
+                    <div class="col-4">
+                        <h5>
+                            Essentials
+                        </h5>
+                    </div>
+                    <div class="col-4">
+                        <h5>
+                            Public transport
+                        </h5>
+                    </div>
+                    <div class="col-4">
+                        <h5>
+                            Car
+                        </h5>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-4">
+                        <input class="form-control" type="text" asp-for="@Model.NewTravel.Departure" placeholder="Departure" />
+                    </div>
+                    <div class="col-4">
+                        <input class="form-control" type="text" asp-for="@Model.NewTravel.TicketPrice" placeholder="Ticket price" />
+                    </div>
+                    <div class="col-4">
+                        <input class="form-control" type="text" asp-for="@Model.NewTravel.Distance" placeholder="Distance (km)" />
+                    </div>
+
+                </div>
+                <div class="row mb-1">
+                    <div class="col-4">
+                        <input class="form-control" type="text" asp-for="@Model.NewTravel.Destination" placeholder="Destination" />
+                    </div>
+                    <div class="col-4">
+                        <input class="form-control" type="text" asp-for="@Model.NewTravel.SeatPrice" placeholder="Seat price" />
+                    </div>
+                    <div class="col-4">
+                        <input class="form-control" type="text" asp-for="@Model.NewTravel.Consumption" placeholder="Consumption (l/100km)" />
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-4 form-group">
+                        <label for="exampleFormControlSelect1">Transport type</label>
+                        <select class="form-control" id="exampleFormControlSelect1">
+                            <option>Car</option>
+                            <option>Train</option>
+                            <option>Bus</option>
+                            <option>Ferry</option>
+                            <option>Plane</option>
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <input class="form-control" type="text" asp-for="@Model.NewTravel.LuggagePrice" placeholder="Luggage price" />
+                    </div>
+                    <div class="col-4">
+                        <div class="mb-2">
+                            <input class="form-control" type="text" asp-for="@Model.NewTravel.FuelPrice" placeholder="Fuel price (€/l)" />
+                        </div>
+                        <div>
+                            <button class="btn btn-dark">
+                                Add participants
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+                <button class="btn btn-dark manager-add-button">
+                    Add
+                </button>
+            </div>
+        </div>
+        <div class="col-3 glassy ml-auto">
+            <div class="container">
+                <h3>
+                    Details
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div class="row no-gutters bubble-row mt-5">
+        <div class="col-3 glassy mr-auto">
+            <div class="container">
+                <h3>
+                    Accommodations
+                </h3>
+                <div class="row no-gutters">
+                    <div class="col-3 ml-auto mr-auto">
+                        Location
+                    </div>
+                    <div class="col-3 ml-auto mr-auto">
+                        Nights
+                    </div>
+                </div>
+                @foreach (var accommodation in Model.Accommodations.Accommodations)
+                {
+                    <div class="row no-gutters selectable-row">
+                        <div class="col-3 ml-auto mr-auto">
+                            @accommodation.Location
+                        </div>
+                        <div class="col-3 ml-auto mr-auto">
+                            @Model.GetNightsAtDestination(accommodation.Location)
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-5 glassy ml-auto mr-auto">
+            <div class="container">
+                <h3>
+                    Accommodation manager
+                </h3>
+                <div class="row">
+                    <div class="col-4">
+                        <h5>
+                            Essentials
+                        </h5>
+                    </div>
+                    <div class="col-4">
+                        <h5>
+                            Prices
+                        </h5>
+                    </div>
+                    <div class="col-4">
+                        <h5>
+                            Summary
+                        </h5>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-5">
+                        <input class="form-control" type="text" asp-for="@Model.NewAccommodation.Location" placeholder="Location" />
+                    </div>
+                    <div class="col-4">
+                        <input class="form-control" type="text" asp-for="@Model.NewAccommodation.Starts" placeholder="Price per night €" />
+                    </div>
+                    <div class="col-3" style="text-align: left;">
+                        Nights:
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-5">
+                        Check-in
+                    </div>
+                    <div class="col-4">
+                        <label for="exampleFormControlSelect1">Transport type</label>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-5">
+                        <div class="row">
+                            <div class="col-3" style="padding-right:0px;">
+                                <input class="form-control" type="text" asp-for="@Model.NewAccommodation.StartDay" placeholder="dd" />
+                            </div>
+                            <div class="col-1" style="padding:0px;">
+                                <h3>
+                                    /
+                                </h3>
+                            </div>
+                            <div class="col-3" style="padding: 0px;">
+                                <input class="form-control" type="text" asp-for="@Model.NewAccommodation.StartMonth" placeholder="mm" />
+                            </div>
+                            <div class="col-1" style="padding:0px;">
+                                <h3>
+                                    /
+                                </h3>
+                            </div>
+                            <div class="col-4" style="padding-left:0px;">
+                                <input class="form-control" type="text" asp-for="@Model.NewAccommodation.StartYear" placeholder="yyyy" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 form-group">
+                        <select class="form-control" id="exampleFormControlSelect1">
+                            <option>Own apartment</option>
+                            <option>Hostel</option>
+                            <option>Hotel</option>
+                            <option>Apartment</option>
+                            <option>Tent</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="col-3" style="text-align: left;">
+                        Participants:
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-5">
+                        Check-out
+                    </div>
+                    <div class="col-4">
+                        <div>
+
+                        </div>
+                    </div>
+                    <div class="col-3">
+
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-5">
+                        <div class="row">
+                            <div class="col-3" style="padding-right:0px;">
+                                <input class="form-control" type="text" asp-for="@Model.NewAccommodation.EndDay" placeholder="dd" />
+                            </div>
+                            <div class="col-1" style="padding:0px;">
+                                <h3>
+                                    /
+                                </h3>
+                            </div>
+                            <div class="col-3" style="padding:0px;">
+                                <input class="form-control" type="text" asp-for="@Model.NewAccommodation.EndMonth" placeholder="mm" />
+                            </div>
+                            <div class="col-1" style="padding:0px;">
+                                <h3>
+                                    /
+                                </h3>
+                            </div>
+                            <div class="col-4" style="padding-left:0px;">
+                                <input class="form-control" type="text" asp-for="@Model.NewAccommodation.EndYear" placeholder="yyyy" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+
+                    </div>
+                    <div class="col-3" style="text-align: left;">
+                        Price/capita:
+                    </div>
+                </div>
+                <button class="btn btn-dark">
+                    Add participants
+                </button>
+                <button class="btn btn-dark manager-add-button">
+                    Add
+                </button>
+            </div>
+        </div>
+        <div class="col-3 glassy ml-auto">
+            <div class="container">
+                <h3>
+                    Details
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div class="row no-gutters bubble-row mt-5">
+        <div class="col-3 glassy mr-auto">
+            <div class="container">
+                <h3>
+                    Expenses
+                </h3>
+                <div class="row no-gutters">
+                    <div class="col-2 ml-auto mr-auto">
+                        Location
+                    </div>
+                    <div class="col-4 ml-auto mr-auto">
+                        Name
+                    </div>
+                    <div class="col-2 ml-auto mr-auto">
+                        Price
+                    </div>
+                </div>
+                @foreach (var expense in Model.Expenses.Expenses)
+                {
+                    <div class="row no-gutters selectable-row">
+                        <div class="col-2 ml-auto mr-auto">
+                            @expense.Location
+                        </div>
+                        <div class="col-4 ml-auto mr-auto">
+                            @expense.ExpenseName
+                        </div>
+                        <div class="col-2 ml-auto mr-auto">
+                            @expense.Price €
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-5 glassy ml-auto mr-auto">
+            <div class="container">
+                <h3>
+                    Expense manager
+                </h3>
+            </div>
+        </div>
+        <div class="col-3 glassy ml-auto">
+            <div class="container">
+                <h3>
+                    Details
+                </h3>
+            </div>
+        </div>
+    </div>
+
+
 </body>
 </html>
 
