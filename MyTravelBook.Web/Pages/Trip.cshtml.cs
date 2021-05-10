@@ -37,6 +37,11 @@ namespace MyTravelBook.Web.Pages
         [BindProperty]
         public ExpenseHeader NewExpense { get; set; }
 
+        public SelectList SelectableParticipants { get; set; }
+
+        [BindProperty]
+        public int[] SelectedParticipants { get; set; }
+
         public TripModel(TripService tripService, UserManager<User> userManager)
         {
             this.tripService = tripService;
@@ -45,17 +50,50 @@ namespace MyTravelBook.Web.Pages
 
         public async Task<IActionResult> OnGet()
         {
-            Trip = this.tripService.GetTrip(Id);
-            Travels = this.tripService.GetTravelsOfTrip(Id);
-            Accommodations = this.tripService.GetAccommodationsOfTrip(Id);
-            Expenses = this.tripService.GetExpensesOfTrip(Id);
-            Participants = this.tripService.GetParticipantsOfTrip(Id);
-            var userId = await UserManager.GetUserAsync(User);
-            if (userId != null)
+            if (Id != null)
             {
-                UserId = userId.Id;
+                Trip = this.tripService.GetTrip(Id);
+                Travels = this.tripService.GetTravelsOfTrip(Id);
+                Accommodations = this.tripService.GetAccommodationsOfTrip(Id);
+                Expenses = this.tripService.GetExpensesOfTrip(Id);
+                Participants = this.tripService.GetParticipantsOfTrip(Id);
+                SelectableParticipants = new SelectList(Participants.FriendsList, nameof(FriendHeader.FriendId), nameof(FriendHeader.Nickname));
+                var userId = await UserManager.GetUserAsync(User);
+
+                if (userId != null)
+                {
+                    UserId = userId.Id;
+                }
             }
+            
+
             return Page();
+        }
+
+        public async Task<IActionResult> OnPost()
+        {
+            if (IsNewTravelNull())
+            {
+                NewTravel = (TravelHeader)AddParticipantsToHeader(NewTravel);
+                NewTravel.TripId = Id;
+                this.tripService.CreateNewTravel(NewTravel);
+            }
+            return RedirectToPage("Index");
+        }
+
+        public Header AddParticipantsToHeader(Header header)
+        {
+            header.ParticipantIds = new List<int>();
+            foreach (var participantId in SelectedParticipants)
+            {
+                header.ParticipantIds.Add(participantId);
+            }
+            return header;
+        }
+
+        public bool IsNewTravelNull()
+        {
+            return (NewTravel != null && NewTravel.Departure != null && NewTravel.Destination != null);
         }
 
         public int GetNightsAtDestination(string destination)
@@ -98,11 +136,11 @@ namespace MyTravelBook.Web.Pages
             {
                 if (travelFee.TicketPrice != 0F)
                 {
-                    return decimal.Round(new decimal(travelFee.TicketPrice + travelFee.SeatPrice + travelFee.LuggagePrice));
+                    return decimal.Round(new decimal((float)travelFee.TicketPrice + (float)travelFee.SeatPrice + (float)travelFee.LuggagePrice));
                 }
                 else if (travelFee.FuelPrice != 0F)
                 {
-                    return decimal.Round(new decimal((travelFee.Distance / 100 * travelFee.Consumption * travelFee.FuelPrice)/travelFee.ParticipantIds.Count));
+                    return decimal.Round(new decimal(((float)travelFee.Distance / 100 * (float)travelFee.Consumption * (float)travelFee.FuelPrice)/travelFee.ParticipantIds.Count));
                 }
             }
             return new decimal(0);

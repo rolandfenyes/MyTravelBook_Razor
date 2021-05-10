@@ -49,6 +49,11 @@ namespace MyTravelBook.Dal.Services
             DbContext.SaveChanges();
         }
 
+        public void CreateNewTravel(TravelHeader travel)
+        {
+            TravelService.CreateNewTravel(travel);
+        }
+
         // Read
 
         public ExpensesHeader GetExpensesOfTrip(int tripId)

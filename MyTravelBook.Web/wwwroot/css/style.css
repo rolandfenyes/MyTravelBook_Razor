@@ -87,3 +87,14 @@
     left: 50%;
     transform: translateX(-50%);
 }
+
+.participant-selector {
+    background-color: transparent;
+    border: 0px;
+    color: white;
+}
+
+.participant-selector option:hover {
+    cursor: pointer;
+    backdrop-filter: blur(15px);
+}

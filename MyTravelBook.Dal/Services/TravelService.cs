@@ -23,13 +23,13 @@ namespace MyTravelBook.Dal.Services
             {
                 Departure = travelHeader.Departure,
                 Destination = travelHeader.Destination,
-                TransportType = (TravellingType)int.Parse(travelHeader.TransportType),
-                TicketPrice = travelHeader.TicketPrice,
-                SeatPrice = travelHeader.SeatPrice,
-                LuggagePrice = travelHeader.LuggagePrice,
-                Distance = travelHeader.Distance,
-                Consumption = travelHeader.Consumption,
-                FuelPrice = travelHeader.FuelPrice
+                TransportType = (TravellingType)(travelHeader.TransportType),
+                TicketPrice = travelHeader.TicketPrice != null ? (float)travelHeader.TicketPrice : 0F,
+                SeatPrice = travelHeader.SeatPrice != null ? (float)travelHeader.SeatPrice : 0F,
+                LuggagePrice = travelHeader.LuggagePrice != null ? (float)travelHeader.LuggagePrice : 0F,
+                Distance = travelHeader.Distance != null ? (float)travelHeader.Distance : 0F,
+                Consumption = travelHeader.Consumption != null ? (float)travelHeader.Consumption : 0F,
+                FuelPrice = travelHeader.FuelPrice != null ? (float)travelHeader.FuelPrice : 0F
             };
             DbContext.Travels.Add(travel);
             DbContext.SaveChanges();
@@ -72,7 +72,7 @@ namespace MyTravelBook.Dal.Services
                     TripId = DbContext.TripTravels.Where(t => t.TravelId == travelId).FirstOrDefault().TripId,
                     Departure = travel.Departure,
                     Destination = travel.Destination,
-                    TransportType = travel.TransportType.ToString(),
+                    TransportType = (int)travel.TransportType,
                     TicketPrice = travel.TicketPrice,
                     SeatPrice = travel.SeatPrice,
                     LuggagePrice = travel.LuggagePrice,
@@ -90,13 +90,13 @@ namespace MyTravelBook.Dal.Services
             var travel = DbContext.Travels.Where(t => t.Id == travelHeader.Id).FirstOrDefault();
             travel.Departure = travelHeader.Departure;
             travel.Destination = travelHeader.Destination;
-            travel.TransportType = (TravellingType)int.Parse(travelHeader.TransportType);
-            travel.TicketPrice = travelHeader.TicketPrice;
-            travel.SeatPrice = travelHeader.SeatPrice;
-            travel.LuggagePrice = travelHeader.LuggagePrice;
-            travel.Distance = travelHeader.Distance;
-            travel.Consumption = travelHeader.Consumption;
-            travel.FuelPrice = travelHeader.FuelPrice;
+            travel.TransportType = (TravellingType)(travelHeader.TransportType);
+            travel.TicketPrice = travelHeader.TicketPrice != null ? (float)travelHeader.TicketPrice : 0F;
+            travel.SeatPrice = travelHeader.SeatPrice != null ? (float)travelHeader.SeatPrice : 0F;
+            travel.LuggagePrice = travelHeader.LuggagePrice != null ? (float)travelHeader.LuggagePrice : 0F;
+            travel.Distance = travelHeader.Distance != null ? (float)travelHeader.Distance : 0F;
+            travel.Consumption = travelHeader.Consumption != null ? (float)travelHeader.Consumption : 0F;
+            travel.FuelPrice = travelHeader.FuelPrice != null ? (float)travelHeader.FuelPrice : 0F;
 
             DbContext.Travels.Update(travel);
 
