@@ -199,17 +199,16 @@
                         <div class="mb-2">
                             <input class="form-control" type="text" asp-for="@Model.NewTravel.FuelPrice" placeholder="Fuel price (€/l)" />
                         </div>
-                        <div>
-                            <button class="btn btn-dark">
-                                Add participants
-                            </button>
-                        </div>
-
                     </div>
                 </div>
-                <button class="btn btn-dark manager-add-button">
-                    Add
-                </button>
+                <div class="manager-add-button">
+                    <button class="btn btn-dark">
+                        Add participants
+                    </button>
+                    <button class="btn btn-dark">
+                        Add
+                    </button>
+                </div>
             </div>
         </div>
         <div class="col-3 glassy ml-auto">
@@ -370,12 +369,14 @@
                         Price/capita:
                     </div>
                 </div>
-                <button class="btn btn-dark">
-                    Add participants
-                </button>
-                <button class="btn btn-dark manager-add-button">
-                    Add
-                </button>
+                <div class="manager-add-button">
+                    <button class="btn btn-dark">
+                        Add participants
+                    </button>
+                    <button class="btn btn-dark">
+                        Add
+                    </button>
+                </div>
             </div>
         </div>
         <div class="col-3 glassy ml-auto">
@@ -424,6 +425,50 @@
                 <h3>
                     Expense manager
                 </h3>
+                <div class="row">
+                    <div class="col-7">
+                        <h5>
+                            Essentials
+                        </h5>
+                        <div class="row mb-1">
+                            <div class="col-6">
+                                <input class="form-control" type="text" asp-for="@Model.NewExpense.Location" placeholder="Location" />
+                            </div>
+                            <div class="col-6">
+                                <input class="form-control" type="text" asp-for="@Model.NewExpense.Price" placeholder="Total Price €" />
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-6">
+                                <input class="form-control" type="text" asp-for="@Model.NewExpense.ExpenseName" placeholder="Expense name" />
+                            </div>
+                            <div class="col-6">
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-12">
+                                <textarea style="resize: none;" class="form-control" type="text" asp-for="@Model.NewExpense.Description" placeholder="Description" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <h5>
+                            Summary
+                        </h5>
+                        <div class="col-12" style="text-align: left;">
+                            Participants:
+                            Price/capita
+                        </div>
+                    </div>
+                </div>
+                <div class="manager-add-button">
+                    <button class="btn btn-dark">
+                        Add participants
+                    </button>
+                    <button class="btn btn-dark">
+                        Add
+                    </button>
+                </div>
             </div>
         </div>
         <div class="col-3 glassy ml-auto">

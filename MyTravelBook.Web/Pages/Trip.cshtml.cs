@@ -34,6 +34,9 @@ namespace MyTravelBook.Web.Pages
         [BindProperty]
         public AccommodationHeader NewAccommodation { get; set; }
 
+        [BindProperty]
+        public ExpenseHeader NewExpense { get; set; }
+
         public TripModel(TripService tripService, UserManager<User> userManager)
         {
             this.tripService = tripService;
