@@ -82,7 +82,7 @@ namespace MyTravelBook.Web.Pages
                 this.tripService.AddParticipantToTrip(Id, participantId);
             }
             
-            return RedirectToPage("Index");
+            return RedirectToPage("/Trip", new { id = Id });
         }
 
         public Header AddParticipantsToHeader(Header header)

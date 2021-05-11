@@ -10,15 +10,15 @@
 }
 
 .trip-background {
-    background-image: url(../images/trip-page.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url(../images/trip-page.jpg);
 }
 
 .travel-background {
-    background-image: url(../images/details-page.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url(../images/details-page.jpg);
 }
 
 .accommodation-background {
-    background-image: url(../images/accommodation-page.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url(../images/accommodation-page.jpg);
 }
 
 .expense-page {

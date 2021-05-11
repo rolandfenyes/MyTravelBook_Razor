@@ -44,7 +44,7 @@ namespace MyTravelBook.Web.Pages
         {
             UserId = await GetUserId();
             this.tripService.AddFriend(UserId, NewFriend.Nickname);
-            return RedirectToPage("Index");
+            return RedirectToPage("Friends");
         }
     }
 }
