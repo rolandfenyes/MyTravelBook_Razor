@@ -6,7 +6,7 @@
 }
 
 .index-background {
-    background-image: url(../images/index-page.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url(../images/index-page.jpg);
 }
 
 .trip-background {
@@ -110,4 +110,13 @@
 .participant-selector option:hover {
     cursor: pointer;
     backdrop-filter: blur(15px);
+}
+
+.title {
+    color: white; 
+    text-align: center;
+}
+
+.index-page {
+    padding-top: 100px;
 }
