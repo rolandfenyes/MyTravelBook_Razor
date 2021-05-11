@@ -77,6 +77,66 @@ namespace MyTravelBook.Dal.Services
 
         // Read
 
+        public List<TripOverallHeader> GetOverallOfTrip(int tripId, int userId)
+        {
+            var tripOverallHeaders = new List<TripOverallHeader>();
+
+            var travels = GetTravelsOfTrip(tripId).Travels.Select(t => t.Destination);
+            var accommodations = GetAccommodationsOfTrip(tripId).Accommodations.Select(a => a.Location);
+            var expenses = GetExpensesOfTrip(tripId).Expenses.Select(e => e.Location);
+
+            var allLocations = travels.Concat(accommodations).Concat(expenses).ToList();
+            var locations = new HashSet<string>(allLocations);
+            
+            foreach (var l in locations)
+            {
+                var accommodationsOfLocation = GetAccommodationAtLocation(l, tripId, userId);
+                var travelsOfLocation = GetTravelsByDestination(l, tripId, userId);
+                var expensesOfLocation = GetExpensesAtLocation(l, tripId, userId);
+
+                var nights = accommodationsOfLocation.Select(a => a.Nights).Sum();
+                var accommodationPrice = accommodationsOfLocation.Select(a => a.CostPerCapita).Sum();
+                var travelCosts = travelsOfLocation.Select(t => t.CostPerCapita).Sum();
+                var expenseCosts = expensesOfLocation.Select(e => e.PricePerCapita).Sum();
+                var total = accommodationPrice + travelCosts + expenseCosts;
+
+                tripOverallHeaders.Add(
+                    new TripOverallHeader
+                    {
+                        Location = l,
+                        Nights = nights,
+                        AccommodationPrice = accommodationPrice,
+                        TravelCosts = travelCosts == null ? new decimal(0) : (decimal)travelCosts,
+                        Expenses = expenseCosts,
+                        Total = total == null ? new decimal(0) : (decimal)total
+                    });
+            }
+
+            return tripOverallHeaders;
+
+        }
+
+        private List<ExpenseHeader> GetExpensesAtLocation(string l, int tripId, int userId)
+        {
+            var expenses = GetExpensesOfTrip(tripId).Expenses.Where(e => e.Location == l && e.TripId == tripId).ToList();
+
+            return expenses.Where(e => e.ParticipantIds.Contains(userId)).ToList();
+        }
+
+        private List<AccommodationHeader> GetAccommodationAtLocation(string location, int tripId, int userId)
+        {
+            var accommodations = GetAccommodationsOfTrip(tripId).Accommodations.Where(a => a.Location == location && a.TripId == tripId).ToList();
+
+            return accommodations.Where(a => a.ParticipantIds.Contains(userId)).ToList();
+        }
+
+        private List<TravelHeader> GetTravelsByDestination(string destination, int tripId, int userId)
+        {
+            var travels = GetTravelsOfTrip(tripId).Travels.Where(t => t.Destination == destination && t.TripId == tripId).ToList();
+
+            return travels.Where(t => t.ParticipantIds.Contains(userId)).ToList();
+        }
+
         public FriendsHeader GetFriends(int userId)
         {
             var friends = DbContext.Friends.Where(f => f.UserId1 == userId || f.UserId2 == userId).ToList();

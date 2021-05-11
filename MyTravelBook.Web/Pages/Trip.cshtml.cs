@@ -14,6 +14,7 @@ namespace MyTravelBook.Web.Pages
 {
     public class TripModel : PageModel
     {
+        public List<TripOverallHeader> TripOverall { get; set; }
         public CreateTripHeader Trip { get; set; }
         public TripDetailsHeader TripDetails { get; set; }
         public TravelsHeader Travels { get; set; }
@@ -64,8 +65,10 @@ namespace MyTravelBook.Web.Pages
                 {
                     UserId = userId.Id;
                 }
+
+                TripOverall = this.tripService.GetOverallOfTrip(Id, UserId);
+
             }
-            
 
             return Page();
         }
@@ -79,12 +82,6 @@ namespace MyTravelBook.Web.Pages
                 this.tripService.CreateNewTravel(NewTravel);
             }
             return RedirectToPage("Index");
-        }
-
-        public int GetNightsOfAccommodation(int id)
-        {
-            var accommodation = Accommodations.Accommodations.Where(a => a.Id == id).FirstOrDefault();
-            return accommodation.Ends.DayOfYear - accommodation.Starts.DayOfYear;
         }
 
         public Header AddParticipantsToHeader(Header header)
@@ -102,76 +99,5 @@ namespace MyTravelBook.Web.Pages
             return (NewTravel != null && NewTravel.Departure != null && NewTravel.Destination != null);
         }
 
-        public int GetNightsAtDestination(string destination)
-        {
-            var accommodations = Accommodations.Accommodations.Where(a => a.Location == destination && a.TripId == Id).ToList();
-            
-            var accommodation = accommodations.Where(a => a.ParticipantIds.Contains(UserId)).FirstOrDefault();
-
-            if (accommodation != null)
-            {
-                return accommodation.Ends.DayOfYear - accommodation.Starts.DayOfYear;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-
-        public decimal GetAccommodationFees(string destination)
-        {
-            var accommodationFees = Accommodations.Accommodations.Where(a => a.Location == destination && a.TripId == Id).ToList();
-            var accommodationFee = accommodationFees.Where(a => a.ParticipantIds.Contains(UserId)).FirstOrDefault();
-
-            if (accommodationFee != null)
-            {
-                return decimal.Round(new decimal(accommodationFee.PricePerNight * (accommodationFee.Ends.DayOfYear - accommodationFee.Starts.DayOfYear)));
-            }
-            else
-            {
-                return 0;
-            }
-        }
-
-        public decimal GetTravelFees(string destination)
-        {
-            var travelFees = Travels.Travels.Where(t => t.Destination == destination && t.TripId == Id).ToList();
-            var travelFee = travelFees.Where(t => t.ParticipantIds.Contains(UserId)).FirstOrDefault();
-
-            if (travelFee != null)
-            {
-                if (travelFee.TicketPrice != 0F)
-                {
-                    return decimal.Round(new decimal((float)travelFee.TicketPrice + (float)travelFee.SeatPrice + (float)travelFee.LuggagePrice));
-                }
-                else if (travelFee.FuelPrice != 0F)
-                {
-                    return decimal.Round(new decimal(((float)travelFee.Distance / 100 * (float)travelFee.Consumption * (float)travelFee.FuelPrice)/travelFee.ParticipantIds.Count));
-                }
-            }
-            return new decimal(0);
-            
-        }
-
-        public decimal GetExpenses(string destination)
-        {
-            var expenses = Expenses.Expenses.Where(e => e.Location == destination && e.TripId == Id).ToList();
-            var expense = expenses.Where(e => e.ParticipantIds.Contains(UserId)).ToList();
-
-            var totalExpense = new decimal(0);
-            foreach (var e in expense)
-            {
-                totalExpense += new decimal(e.Price / e.ParticipantIds.Count);
-            }
-            return decimal.Round(totalExpense);
-        }
-
-        public decimal GetTotal(string destination, TravelHeader travel)
-        {
-            var acFees = GetAccommodationFees(destination);
-            var trFees = (decimal)travel.CostPerCapita;
-            var oFees = GetExpenses(destination);
-            return decimal.Round(acFees + trFees + oFees);
-        }
     }
 }

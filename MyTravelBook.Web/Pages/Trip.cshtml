@@ -13,9 +13,20 @@
         <div class="col-3 glassy mr-auto">
             <div class="container">
                 <h3>
-                    Trip description
+                    Trip Details
                 </h3>
-                <p>
+                <ul style="text-align: left;">
+                    <li>
+                        Starts: @Model.Trip.Starts.ToShortDateString()
+                    </li>
+                    <li>
+                        Ends: @Model.Trip.Ends.ToShortDateString()
+                    </li>
+                </ul>
+                <h5>
+                    Description
+                </h5>
+                <p style="text-align: left;">
                     @Model.Trip.Description
                 </p>
             </div>
@@ -48,26 +59,26 @@
                         In total
                     </div>
                 </div>
-                @foreach (var travel in Model.Travels.Travels)
+                @foreach (var location in Model.TripOverall)
                 {
                     <div class="row no-gutters">
                         <div class="col-3">
-                            @travel.Destination
+                            @location.Location
                         </div>
                         <div class="col-2">
-                            @Model.GetNightsAtDestination(travel.Destination)
+                            @location.Nights
                         </div>
                         <div class="col-1">
-                            @Model.GetAccommodationFees(travel.Destination) €
+                            @location.AccommodationPrice €
                         </div>
                         <div class="col-2">
-                            @travel.CostPerCapita €
+                            @location.TravelCosts €
                         </div>
                         <div class="col-2">
-                            @Model.GetExpenses(travel.Destination) €
+                            @location.Expenses €
                         </div>
                         <div class="col-2">
-                            @Model.GetTotal(travel.Destination, travel) €
+                            @location.Total €
                         </div>
                     </div>
                 }
@@ -155,7 +166,7 @@
                             @accommodation.Location
                         </div>
                         <div class="col-3 ml-auto mr-auto">
-                            @Model.GetNightsOfAccommodation(accommodation.Id)
+                            @accommodation.Nights
                         </div>
                     </a>
                 }
