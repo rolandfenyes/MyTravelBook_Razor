@@ -1,0 +1,143 @@
+﻿@page
+@model MyTravelBook.Web.Pages.Details.TravelModel
+@{
+}
+
+<html>
+<head>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<form method="post">
+    <body class="trip-background background">
+        <div class="row no-gutters bubble-row mt-5">
+            <div class="col-3 glassy mr-auto">
+                <div class="container">
+                    <h3>
+                        Travels
+                    </h3>
+                    <div class="row no-gutters">
+                        <div class="col-4 ml-auto mr-auto">
+                            Departure
+                        </div>
+                        <div class="col-1 ml-auto mr-auto">
+
+                        </div>
+                        <div class="col-4 ml-auto mr-auto">
+                            Destination
+                        </div>
+                    </div>
+                    @foreach (var travel in Model.Travels.Travels)
+                    {
+                        <a asp-page="/Details/TravelDetails" asp-route-id="@travel.Id" class="row no-gutters selectable-row">
+                            <div class="col-4 ml-auto mr-auto">
+                                @travel.Departure
+                            </div>
+                            <div class="col-1 ml-auto mr-auto">
+                                ->
+                            </div>
+                            <div class="col-4 ml-auto mr-auto">
+                                @travel.Destination
+                            </div>
+                        </a>
+                    }
+                </div>
+            </div>
+            <div class="col-5 glassy ml-auto mr-auto">
+                <div class="container">
+                    <h3>
+                        Travel manager
+                    </h3>
+                    <div class="row">
+                        <div class="col-4">
+                            <h5>
+                                Essentials
+                            </h5>
+                        </div>
+                        <div class="col-4">
+                            <h5>
+                                Public transport
+                            </h5>
+                        </div>
+                        <div class="col-4">
+                            <h5>
+                                Car
+                            </h5>
+                        </div>
+                    </div>
+                    <div class="row mb-1">
+                        <div class="col-4">
+                            <input class="form-control" type="text" asp-for="@Model.NewTravel.Departure" placeholder="Departure" />
+                        </div>
+                        <div class="col-4">
+                            <input class="form-control" type="text" asp-for="@Model.NewTravel.TicketPrice" placeholder="Ticket price" />
+                        </div>
+                        <div class="col-4">
+                            <input class="form-control" type="text" asp-for="@Model.NewTravel.Distance" placeholder="Distance (km)" />
+                        </div>
+
+                    </div>
+                    <div class="row mb-1">
+                        <div class="col-4">
+                            <input class="form-control" type="text" asp-for="@Model.NewTravel.Destination" placeholder="Destination" />
+                        </div>
+                        <div class="col-4">
+                            <input class="form-control" type="text" asp-for="@Model.NewTravel.SeatPrice" placeholder="Seat price" />
+                        </div>
+                        <div class="col-4">
+                            <input class="form-control" type="text" asp-for="@Model.NewTravel.Consumption" placeholder="Consumption (l/100km)" />
+                        </div>
+                    </div>
+                    <div class="row mb-1">
+                        <div class="col-4 form-group">
+                            <label for="exampleFormControlSelect1">Transport type</label>
+                            <select asp-for="@Model.NewTravel.TransportType" class="form-control" id="exampleFormControlSelect1">
+                                <option value="2">Car</option>
+                                <option value="1">Public Transport</option>
+                                <option value="0">Plane</option>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <input class="form-control" type="text" asp-for="@Model.NewTravel.LuggagePrice" placeholder="Luggage price" />
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-2">
+                                <input class="form-control" type="text" asp-for="@Model.NewTravel.FuelPrice" placeholder="Fuel price (€/l)" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="manager-add-button">
+                        <button class="btn btn-dark" type="submit">
+                            Add
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-3 glassy ml-auto">
+                <div class="container">
+                    <h3>
+                        Participants
+                    </h3>
+                    <div class="row h-75">
+                        <div class="col-12">
+                            <select class="custom-select participant-selector h-100" asp-for="@Model.SelectedParticipants" multiple="multiple">
+                                @foreach (var p in Model.SelectableParticipants)
+                                {
+                                    <option value="@p.Value">@p.Text</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row no-gutters">
+            <div class="col-12" style="text-align: center;">
+                <a class="btn btn-dark mt-2" asp-page="/Trip" asp-route-id="@Model.Id">
+                    Back to trip
+                </a>
+            </div>
+        </div>
+    </body>
+</form>
+</html>

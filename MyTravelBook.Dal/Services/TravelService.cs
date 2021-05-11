@@ -66,6 +66,10 @@ namespace MyTravelBook.Dal.Services
             {
                 participantIds.Add(participant.UserId);
             }
+
+            var totalCost = CalculateCosts(travel, participantIds.Count, true);
+            var costPerCapita = CalculateCosts(travel, participants.Count, false);
+
             return new TravelHeader
                 {
                     Id = travel.Id,
@@ -79,8 +83,31 @@ namespace MyTravelBook.Dal.Services
                     Distance = travel.Distance,
                     Consumption = travel.Consumption,
                     FuelPrice = travel.FuelPrice,
-                    ParticipantIds = participantIds
+                    ParticipantIds = participantIds,
+                    TotalCost = totalCost,
+                    CostPerCapita = costPerCapita
                 };
+        }
+
+        public decimal CalculateCosts(Travel travel, int numOfParticipants, bool isTotal)
+        {
+            if ((int)travel.TransportType == 2)
+            {
+                var carCost = decimal.Round(new decimal(((float)travel.Distance / 100 * (float)travel.Consumption * (float)travel.FuelPrice)));
+                if (isTotal)
+                {
+                    return carCost;
+                }
+                else
+                {
+                    return carCost / numOfParticipants;
+                }
+                
+            }
+            else
+            {
+                return decimal.Round(new decimal(travel.TicketPrice + travel.SeatPrice + travel.LuggagePrice));
+            }
         }
 
         // Update

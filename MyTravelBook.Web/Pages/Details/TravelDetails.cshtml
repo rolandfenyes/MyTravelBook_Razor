@@ -1,0 +1,145 @@
+﻿@page
+@model MyTravelBook.Web.Pages.Details.TravelDetailsModel
+@{
+}
+<html>
+<head>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="details-background background">
+    <div class="row no-gutters bubble-row mt-5">
+        <div class="col-3 glassy mr-auto">
+            <div class="container">
+                <h3>
+                    Travels
+                </h3>
+                <div class="row no-gutters">
+                    <div class="col-4 ml-auto mr-auto">
+                        Departure
+                    </div>
+                    <div class="col-1 ml-auto mr-auto">
+
+                    </div>
+                    <div class="col-4 ml-auto mr-auto">
+                        Destination
+                    </div>
+                </div>
+                @foreach (var travel in Model.Travels.Travels)
+                {
+                    <a asp-page="TravelDetails" asp-route-id="@travel.Id" class="row no-gutters selectable-row">
+                        <div class="col-4 ml-auto mr-auto">
+                            @travel.Departure
+                        </div>
+                        <div class="col-1 ml-auto mr-auto">
+                            ->
+                        </div>
+                        <div class="col-4 ml-auto mr-auto">
+                            @travel.Destination
+                        </div>
+                    </a>
+                }
+                <a class="btn btn-dark mt-2" asp-page="/Add/Travel" asp-route-id="@Model.Travel.TripId">
+                    Add new
+                </a>
+            </div>
+        </div>
+        <div class="col-5 glassy ml-auto mr-auto">
+            <div class="container" style="text-align: left;">
+                <h3 style="text-align: center;">
+                    Travel Details
+                </h3>
+                <div class="row">
+                    <div class="col-4">
+                        <h5>
+                            Essentials
+                        </h5>
+                    </div>
+                    <div class="col-4">
+                        <h5>
+                            Public transport
+                        </h5>
+                    </div>
+                    <div class="col-4">
+                        <h5>
+                            Car
+                        </h5>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-4">
+                        From: @Model.Travel.Departure
+                    </div>
+                    <div class="col-4">
+                        Ticket: @Model.Travel.TicketPrice €
+                    </div>
+                    <div class="col-4">
+                        Distance: @Model.Travel.Distance km
+                    </div>
+
+                </div>
+                <div class="row mb-1">
+                    <div class="col-4">
+                        To: @Model.Travel.Destination
+                    </div>
+                    <div class="col-4">
+                        Seat: @Model.Travel.SeatPrice €
+                    </div>
+                    <div class="col-4">
+                        Cons: @Model.Travel.Consumption (l/100km)
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-4 form-group">
+                        Transport Type: @Model.TravelType
+                    </div>
+                    <div class="col-4">
+                        Luggage: @Model.Travel.LuggagePrice €
+                    </div>
+                    <div class="col-4">
+                        <div class="mb-2">
+                            Fuel: @Model.Travel.FuelPrice €/l
+                        </div>
+                    </div>
+                </div>
+                <h3 style="text-align: center;">
+                Costs
+                </h3>
+                <div class="row mb-1">
+                    <div class="col-12">
+                        <h6>
+                            Total costs: @Model.Travel.TotalCost €
+                        </h6>
+                        <h6>
+                            Cost for you: @Model.Travel.CostPerCapita €
+                        </h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3 glassy ml-auto">
+            <div class="container">
+                <h3>
+                    Participants
+                </h3>
+                <div class="row h-75">
+                    <div class="col-12">
+                        <select class="custom-select participant-selector h-100" multiple="multiple">
+                            @foreach (var p in Model.Participants.FriendsList)
+                            {
+                                <option >@p.Nickname</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row no-gutters">
+        <div class="col-12" style="text-align: center;">
+            <a class="btn btn-dark mt-2" asp-page="/Trip" asp-route-id="@Model.Travel.TripId">
+                Back to trip
+            </a>
+        </div>
+    </div>
+</body>
+</html>

@@ -2,7 +2,7 @@
 
 namespace MyTravelBook.Dal.Dto
 {
-    public class ExpenseHeader
+    public class ExpenseHeader : Header
     {
         public int Id { get; set; }
         public int? TripId { get; set; }
@@ -10,6 +10,5 @@ namespace MyTravelBook.Dal.Dto
         public string ExpenseName { get; set; }
         public string Description { get; set; }
         public float Price { get; set; }
-        public List<int>? ParticipantIds { get; set; }
     }
 }

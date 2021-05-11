@@ -54,6 +54,16 @@ namespace MyTravelBook.Dal.Services
             TravelService.CreateNewTravel(travel);
         }
 
+        public void CreateNewAccommodation(AccommodationHeader accommodation)
+        {
+            AccommodationService.CreateNewAccommodation(accommodation);
+        }
+
+        public void CreateNewExpense(ExpenseHeader expense)
+        {
+            ExpenseService.CreateNewExpense(expense);
+        }
+
         // Read
 
         public ExpensesHeader GetExpensesOfTrip(int tripId)
@@ -75,7 +85,7 @@ namespace MyTravelBook.Dal.Services
             accommodationsOfTrip.Accommodations = new List<AccommodationHeader>();
             foreach (var accommodationId in accommodationIds)
             {
-                accommodationsOfTrip.Accommodations.Add(AccommodationService.GetAccommodation(tripId));
+                accommodationsOfTrip.Accommodations.Add(AccommodationService.GetAccommodation(accommodationId.AccommodationId));
             }
             return accommodationsOfTrip;
         }

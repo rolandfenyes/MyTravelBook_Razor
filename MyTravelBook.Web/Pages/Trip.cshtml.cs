@@ -81,6 +81,12 @@ namespace MyTravelBook.Web.Pages
             return RedirectToPage("Index");
         }
 
+        public int GetNightsOfAccommodation(int id)
+        {
+            var accommodation = Accommodations.Accommodations.Where(a => a.Id == id).FirstOrDefault();
+            return accommodation.Ends.DayOfYear - accommodation.Starts.DayOfYear;
+        }
+
         public Header AddParticipantsToHeader(Header header)
         {
             header.ParticipantIds = new List<int>();
@@ -160,10 +166,10 @@ namespace MyTravelBook.Web.Pages
             return decimal.Round(totalExpense);
         }
 
-        public decimal GetTotal(string destination)
+        public decimal GetTotal(string destination, TravelHeader travel)
         {
             var acFees = GetAccommodationFees(destination);
-            var trFees = GetTravelFees(destination);
+            var trFees = (decimal)travel.CostPerCapita;
             var oFees = GetExpenses(destination);
             return decimal.Round(acFees + trFees + oFees);
         }

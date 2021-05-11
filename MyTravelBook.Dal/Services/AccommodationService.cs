@@ -23,9 +23,9 @@ namespace MyTravelBook.Dal.Services
             var accommodation = new Accommodation
             {
                 Location = accommodationHeader.Location,
-                Starts = accommodationHeader.Starts,
-                Ends = accommodationHeader.Ends,
-                AccommodationType = (AccommodationType)int.Parse(accommodationHeader.AccommodationType),
+                Starts = new DateTime(int.Parse(accommodationHeader.StartYear), int.Parse(accommodationHeader.StartMonth), int.Parse(accommodationHeader.StartDay)),
+                Ends = new DateTime(int.Parse(accommodationHeader.EndYear), int.Parse(accommodationHeader.EndMonth), int.Parse(accommodationHeader.EndDay)),
+                AccommodationType = (AccommodationType)(accommodationHeader.AccommodationType),
                 PricePerNight = accommodationHeader.PricePerNight
             };
             DbContext.Accommodations.Add(accommodation);
@@ -67,7 +67,7 @@ namespace MyTravelBook.Dal.Services
                     Location = accommodation.Location,
                     Starts = accommodation.Starts,
                     Ends = accommodation.Ends,
-                    AccommodationType = accommodation.AccommodationType.ToString(),
+                    AccommodationType = (int)accommodation.AccommodationType,
                     PricePerNight = accommodation.PricePerNight,
                     ParticipantIds = participantIds
                 };
@@ -81,7 +81,7 @@ namespace MyTravelBook.Dal.Services
             accommodation.Location = accommodationHeader.Location;
             accommodation.Starts = accommodationHeader.Starts;
             accommodation.Ends = accommodationHeader.Ends;
-            accommodation.AccommodationType = (AccommodationType)int.Parse(accommodationHeader.AccommodationType);
+            accommodation.AccommodationType = (AccommodationType)(accommodationHeader.AccommodationType);
             accommodation.PricePerNight = accommodationHeader.PricePerNight;
 
             DbContext.Accommodations.Update(accommodation);
