@@ -13,8 +13,12 @@
     background-image: url(../images/trip-page.jpg);
 }
 
-.details-background {
-    background-image: url(../images/details-page.jpg)
+.travel-background {
+    background-image: url(../images/details-page.jpg);
+}
+
+.accommodation-background {
+    background-image: url(../images/accommodation-page.jpg);
 }
 
 .glassy {

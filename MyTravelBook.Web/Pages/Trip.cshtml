@@ -154,14 +154,14 @@
                 </div>
                 @foreach (var accommodation in Model.Accommodations.Accommodations)
                 {
-                    <div class="row no-gutters selectable-row">
+                    <a asp-page="Details/AccommodationDetails" asp-route-id="@accommodation.Id" class="row no-gutters selectable-row">
                         <div class="col-3 ml-auto mr-auto">
                             @accommodation.Location
                         </div>
                         <div class="col-3 ml-auto mr-auto">
                             @Model.GetNightsOfAccommodation(accommodation.Id)
                         </div>
-                    </div>
+                    </a>
                 }
                 <a class="btn btn-dark mt-2" asp-page="Add/Accommodation" asp-route-id="@Model.Id">
                     Add new

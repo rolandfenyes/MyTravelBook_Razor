@@ -60,6 +60,9 @@ namespace MyTravelBook.Dal.Services
             {
                 participantIds.Add(participant.UserId);
             }
+            var nights = CalculateNights(accommodation);
+            var totalCost = CalculateCost(accommodation, nights, participantIds.Count, true);
+            var costPerCapita = CalculateCost(accommodation, nights, participantIds.Count, false);
             return new AccommodationHeader
                 {
                     Id = accommodation.Id,
@@ -69,8 +72,29 @@ namespace MyTravelBook.Dal.Services
                     Ends = accommodation.Ends,
                     AccommodationType = (int)accommodation.AccommodationType,
                     PricePerNight = accommodation.PricePerNight,
-                    ParticipantIds = participantIds
+                    ParticipantIds = participantIds,
+                    Nights = nights,
+                    TotalCost = totalCost,
+                    CostPerCapita = costPerCapita
                 };
+        }
+
+        public decimal CalculateCost(Accommodation accommodation, int nights, int numOfParticipants, bool isTotal)
+        {
+            var totalCost = new decimal(accommodation.PricePerNight * nights);
+            if (isTotal)
+            {
+                return totalCost;
+            }
+            else
+            {
+                return totalCost / numOfParticipants;
+            }
+        }
+
+        public int CalculateNights(Accommodation accommodation)
+        {
+            return accommodation.Ends.DayOfYear - accommodation.Starts.DayOfYear;
         }
 
         // Update

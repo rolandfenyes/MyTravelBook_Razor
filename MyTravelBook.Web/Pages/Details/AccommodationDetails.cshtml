@@ -1,0 +1,154 @@
+﻿@page
+@model MyTravelBook.Web.Pages.Details.AccommodationDetailsModel
+@{
+}
+<html>
+<head>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="accommodation-background background">
+    <div class="row no-gutters bubble-row mt-5">
+        <div class="col-3 glassy mr-auto">
+            <div class="container">
+                <h3>
+                    Accommodations
+                </h3>
+                <div class="row no-gutters">
+                    <div class="col-3 ml-auto mr-auto">
+                        Location
+                    </div>
+                    <div class="col-3 ml-auto mr-auto">
+                        Nights
+                    </div>
+                </div>
+                @foreach (var accommodation in Model.Accommodations.Accommodations)
+                {
+                    <a asp-page="/Details/AccommodationDetails" asp-route-id="@accommodation.Id" class="row no-gutters selectable-row">
+                        <div class="col-3 ml-auto mr-auto">
+                            @accommodation.Location
+                        </div>
+                        <div class="col-3 ml-auto mr-auto">
+                            @accommodation.Nights
+                        </div>
+                    </a>
+                }
+                <div class="manager-add-button">
+                    <a class="btn btn-dark" asp-page="/Add/Accommodation" asp-route-id="@Model.Accommodation.TripId">
+                        Add
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-5 glassy ml-auto mr-auto">
+            <div class="container" style="text-align: left;">
+                <h3 style="text-align: center;">
+                    Accommodation manager
+                </h3>
+                <div class="row" style="text-align: center;">
+                    <div class="col-5">
+                        <h5>
+                            Essentials
+                        </h5>
+                    </div>
+                    <div class="col-4">
+                        <h5>
+                            Prices
+                        </h5>
+                    </div>
+                    <div class="col-3">
+                        <h5>
+                            Summary
+                        </h5>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-5">
+                        Location: @Model.Accommodation.Location
+                    </div>
+                    <div class="col-4">
+                        Price/night: @Model.Accommodation.PricePerNight €
+                    </div>
+                    <div class="col-3" style="text-align: left;">
+                        Nights: @Model.Accommodation.Nights
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-5">
+                        Check-in: @Model.Accommodation.Starts.ToShortDateString()
+                    </div>
+                    <div class="col-4">
+
+                    </div>
+                    <div class="col-3" style="text-align: left;">
+                        Participants: @Model.Accommodation.ParticipantIds.Count
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-5">
+                        Check-out: @Model.Accommodation.Ends.ToShortDateString()
+                    </div>
+                    <div class="col-4">
+
+                    </div>
+                    <div class="col-3">
+
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-5">
+                        Accommodation: @Model.AccommodationType
+                    </div>
+                    <div class="col-4">
+                        <div>
+
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <h5 style="text-align: center;">
+                            Costs
+                        </h5>
+
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-5">
+
+                    </div>
+                    <div class="col-4">
+
+                    </div>
+                    <div class="col-3" style="text-align: left;">
+                        Price/capita: @Model.Accommodation.CostPerCapita €
+                        Total: @Model.Accommodation.TotalCost €
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3 glassy ml-auto">
+            <div class="container">
+                <h3>
+                    Participants
+                </h3>
+                <div class="row h-75">
+                    <div class="col-12">
+                        <select class="custom-select participant-selector h-100" multiple="multiple">
+                            @foreach (var p in Model.Participants.FriendsList)
+                            {
+                                <option>@p.Nickname</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row no-gutters">
+        <div class="col-12" style="text-align: center;">
+            <a class="btn btn-dark mt-2" asp-page="/Trip" asp-route-id="@Model.Accommodation.TripId">
+                Back to trip
+            </a>
+        </div>
+    </div>
+</body>
+</html>

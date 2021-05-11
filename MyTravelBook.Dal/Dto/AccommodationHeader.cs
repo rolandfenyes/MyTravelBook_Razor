@@ -19,5 +19,10 @@ namespace MyTravelBook.Dal.Dto
         public string EndDay { get; set; }
         public string EndMonth { get; set; }
         public string EndYear { get; set; }
+
+        public int Nights { get; set; }
+        public decimal TotalCost { get; set; }
+        public decimal CostPerCapita { get; set; }
+
     }
 }
