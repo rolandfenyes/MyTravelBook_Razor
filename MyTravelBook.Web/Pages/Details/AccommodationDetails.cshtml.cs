@@ -34,7 +34,7 @@ namespace MyTravelBook.Web.Pages.Details
             Accommodation = this.tripService.AccommodationService.GetAccommodation(Id);
             SetAccommodationType();
             Accommodations = this.tripService.GetAccommodationsOfTrip((int)Accommodation.TripId);
-            Participants = this.tripService.GetParticipantsOfTrip((int)Accommodation.TripId);
+            Participants = this.tripService.AccommodationService.GetParticipantsOfAccommodation(Accommodation.Id);
             var userId = await UserManager.GetUserAsync(User);
 
             if (userId != null)

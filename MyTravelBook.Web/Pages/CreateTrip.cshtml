@@ -69,7 +69,7 @@
                 </div>
             </div>
             <div class="col-3 ml-2 mr-auto">
-                <div class="glassy">
+                <div class="glassy" style="min-height: 300px;">
                     <div class="container">
                         <h3>
                             Participants
@@ -82,7 +82,7 @@
                         }
                         else
                         {
-                            <select class="custom-select participant-selector h-100" asp-for="@Model.SelectedParticipants" multiple="multiple">
+                            <select class="custom-select participant-selector h-75" asp-for="@Model.SelectedParticipants" multiple="multiple">
                                 @foreach (var p in Model.SelectableParticipants)
                                 {
                                     <option value="@p.Value">@p.Text</option>

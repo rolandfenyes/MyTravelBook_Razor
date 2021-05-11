@@ -35,7 +35,7 @@ namespace MyTravelBook.Web.Pages.Details
             Travel = this.tripService.TravelService.GetTravel(Id);
             SetTravelType();
             Travels = this.tripService.GetTravelsOfTrip((int)Travel.TripId);
-            Participants = this.tripService.GetParticipantsOfTrip((int)Travel.TripId);
+            Participants = this.tripService.TravelService.GetParticipantsOfTravel(Travel.Id);
             var userId = await UserManager.GetUserAsync(User);
 
             if (userId != null)

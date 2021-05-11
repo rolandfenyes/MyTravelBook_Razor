@@ -58,13 +58,14 @@ namespace MyTravelBook.Web.Pages
                 Accommodations = this.tripService.GetAccommodationsOfTrip(Id);
                 Expenses = this.tripService.GetExpensesOfTrip(Id);
                 Participants = this.tripService.GetParticipantsOfTrip(Id);
-                SelectableParticipants = new SelectList(Participants.FriendsList, nameof(FriendHeader.FriendId), nameof(FriendHeader.Nickname));
                 var userId = await UserManager.GetUserAsync(User);
 
                 if (userId != null)
                 {
                     UserId = userId.Id;
                 }
+
+                SelectableParticipants = new SelectList(this.tripService.GetFriends(UserId).FriendsList, nameof(FriendHeader.FriendId), nameof(FriendHeader.Nickname));
 
                 TripOverall = this.tripService.GetOverallOfTrip(Id, UserId);
 
@@ -73,14 +74,14 @@ namespace MyTravelBook.Web.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
-            if (IsNewTravelNull())
+            var participantIds = SelectedParticipants;
+            foreach (var participantId in participantIds)
             {
-                NewTravel = (TravelHeader)AddParticipantsToHeader(NewTravel);
-                NewTravel.TripId = Id;
-                this.tripService.CreateNewTravel(NewTravel);
+                this.tripService.AddParticipantToTrip(Id, participantId);
             }
+            
             return RedirectToPage("Index");
         }
 

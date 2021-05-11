@@ -334,6 +334,17 @@ namespace MyTravelBook.Dal.Services
             return true;
         }
 
+        public void AddParticipantToTrip(int tripId, int participantId)
+        {
+            DbContext.TripParticipants.Add(
+                new TripParticipants
+                {
+                    TripId = tripId,
+                    UserId = participantId
+                });
+            DbContext.SaveChanges();
+        }
+
         // Delete
         public void DeleteTripById(int tripId)
         {

@@ -98,9 +98,9 @@
                         </h5>
                     </div>
                 }
-                <button class="add-btn btn btn-dark">
+                <button type="button" class="add-btn btn btn-dark" data-toggle="modal" data-target="#addParticipant">
                     Add
-                </button>
+                </buttontype="button">
             </div>
 
         </div>
@@ -212,5 +212,43 @@
         </div>
     </div>
 </body>
+<div class="modal fade" id="addParticipant" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add friend</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post">
+                <div class="modal-body">
+                    <h3>
+                        Participants
+                    </h3>
+                    @if (Model.SelectableParticipants.Count() == 0)
+                    {
+                        <h6>
+                            It looks like you have no friends.
+                        </h6>
+                    }
+                    else
+                    {
+                        <select class="custom-select participant-selector h-75" asp-for="@Model.SelectedParticipants" multiple="multiple">
+                            @foreach (var p in Model.SelectableParticipants)
+                            {
+                                <option style="color: black;" value="@p.Value">@p.Text</option>
+                            }
+                        </select>
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add to trip</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </html>
 

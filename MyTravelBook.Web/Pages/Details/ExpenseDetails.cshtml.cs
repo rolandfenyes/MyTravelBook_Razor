@@ -34,7 +34,7 @@ namespace MyTravelBook.Web.Pages.Details
             Expense = this.tripService.ExpenseService.GetExpense(Id);
             
             Expenses = this.tripService.GetExpensesOfTrip((int)Expense.TripId);
-            Participants = this.tripService.GetParticipantsOfTrip((int)Expense.TripId);
+            Participants = this.tripService.ExpenseService.GetParticipantsOfExpense(Expense.Id);
             var userId = await UserManager.GetUserAsync(User);
 
             if (userId != null)

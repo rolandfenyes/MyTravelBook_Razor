@@ -14,19 +14,21 @@
                     <h3>
                         Friends
                     </h3>
-                    @if (Model.Friends.FriendsList.Count == 0)
-                    {
-                        <h5>
-                            It seems like you have no friends.
-                        </h5>
-                    }
-                    else
-                    {
-                        @foreach (var f in Model.Friends.FriendsList)
+                    <div style="min-height: 100px;">
+                        @if (Model.Friends.FriendsList.Count == 0)
                         {
-                            <option>@f.Nickname</option>
+                            <h5>
+                                It seems like you have no friends.
+                            </h5>
                         }
-                    }
+                        else
+                        {
+                            @foreach (var f in Model.Friends.FriendsList)
+                            {
+                                <option>@f.Nickname</option>
+                            }
+                        }
+                    </div>
                     <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addNewFriend">Add new friend</button>
                 </div>
             </div>

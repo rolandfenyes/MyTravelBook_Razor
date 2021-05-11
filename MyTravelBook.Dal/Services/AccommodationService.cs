@@ -97,6 +97,23 @@ namespace MyTravelBook.Dal.Services
             return accommodation.Ends.DayOfYear - accommodation.Starts.DayOfYear;
         }
 
+        public FriendsHeader GetParticipantsOfAccommodation(int accommodationId)
+        {
+            var participants = DbContext.AccommodationParticipants.Where(t => t.AccommodationId == accommodationId).ToList();
+            var participantHeaders = new FriendsHeader();
+            participantHeaders.FriendsList = new List<FriendHeader>();
+            foreach (var user in participants)
+            {
+                participantHeaders.FriendsList.Add(
+                    new FriendHeader
+                    {
+                        FriendId = user.UserId,
+                        Nickname = DbContext.Users.Where(u => u.Id == user.UserId).FirstOrDefault().Name
+                    });
+            }
+            return participantHeaders;
+        }
+
         // Update
 
         public void UpdateExistingAccommodation(AccommodationHeader accommodationHeader)

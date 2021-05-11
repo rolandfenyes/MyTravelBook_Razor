@@ -110,6 +110,23 @@ namespace MyTravelBook.Dal.Services
             }
         }
 
+        public FriendsHeader GetParticipantsOfTravel(int travelId)
+        {
+            var participants = DbContext.TravelParticipants.Where(t => t.TravelId == travelId).ToList();
+            var participantHeaders = new FriendsHeader();
+            participantHeaders.FriendsList = new List<FriendHeader>();
+            foreach (var user in participants)
+            {
+                participantHeaders.FriendsList.Add(
+                    new FriendHeader
+                    {
+                        FriendId = user.UserId,
+                        Nickname = DbContext.Users.Where(u => u.Id == user.UserId).FirstOrDefault().Name
+                    });
+            }
+            return participantHeaders;
+        }
+
         // Update
 
         public void UpdateExistingTravel(TravelHeader travelHeader)

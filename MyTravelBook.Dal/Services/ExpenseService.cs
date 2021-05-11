@@ -80,6 +80,23 @@ namespace MyTravelBook.Dal.Services
             return new decimal(expense.Price / numOfParticipants);
         }
 
+        public FriendsHeader GetParticipantsOfExpense(int expenseId)
+        {
+            var participants = DbContext.ExpenseParticipants.Where(t => t.ExpenseId == expenseId).ToList();
+            var participantHeaders = new FriendsHeader();
+            participantHeaders.FriendsList = new List<FriendHeader>();
+            foreach (var user in participants)
+            {
+                participantHeaders.FriendsList.Add(
+                    new FriendHeader
+                    {
+                        FriendId = user.UserId,
+                        Nickname = DbContext.Users.Where(u => u.Id == user.UserId).FirstOrDefault().Name
+                    });
+            }
+            return participantHeaders;
+        }
+
         // Update
 
         public void UpdateExistingExpense(ExpenseHeader expenseHeader)
