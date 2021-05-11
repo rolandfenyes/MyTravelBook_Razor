@@ -25,28 +25,21 @@ namespace MyTravelBook.Dal.Services
 
         // Create
 
-        public void CreateNewTrip(CreateTripHeader trip)
+        public int CreateNewTrip(CreateTripHeader trip)
         {
             var tripEntity = new Trip
             {
                 TripName = trip.TripName,
                 Starts = trip.Starts,
                 Ends = trip.Ends,
-                DocumentId = null,
+                Description = trip.Description,
                 TripOwnerId = trip.TripOwnerId
             };
-            var documentsEntity = new Document
-            {
-                IdCard = trip.TripDetails.IDCard,
-                InternationalPassport = trip.TripDetails.InternationalPassport,
-                DrivingLicense = trip.TripDetails.DrivingLicense,
-                HealthCard = trip.TripDetails.HealthCard
-            };
-            DbContext.Documents.Add(documentsEntity);
             DbContext.SaveChanges();
-            tripEntity.DocumentId = documentsEntity.Id;
             DbContext.Trips.Add(tripEntity);
             DbContext.SaveChanges();
+
+            return tripEntity.Id;
         }
 
         public void CreateNewTravel(TravelHeader travel)
@@ -107,7 +100,6 @@ namespace MyTravelBook.Dal.Services
             var participants = DbContext.TripParticipants.Where(t => t.TripId == tripId).ToList();
             var participantHeaders = new FriendsHeader();
             participantHeaders.FriendsList = new List<FriendHeader>();
-
             foreach (var user in participants)
             {
                 participantHeaders.FriendsList.Add(
@@ -120,19 +112,30 @@ namespace MyTravelBook.Dal.Services
             return participantHeaders;
         }
 
-        public TripDetailsHeader GetDetailsOfTrip(int tripId)
+        public List<int> GetParticipantIdsOfTrip(int tripId)
         {
-            var documentId = DbContext.Trips.Where(t => t.Id == tripId).FirstOrDefault().DocumentId;
-            var tripDetails = DbContext.Documents.Where(d => d.Id == documentId).FirstOrDefault();
-            return new TripDetailsHeader
+            var participants = DbContext.TripParticipants.Where(t => t.TripId == tripId).ToList();
+            var participantIds = new List<int>();
+            foreach (var p in participants)
             {
-                TripId = tripId,
-                IDCard = tripDetails.IdCard,
-                InternationalPassport = tripDetails.InternationalPassport,
-                DrivingLicense = tripDetails.DrivingLicense,
-                HealthCard = tripDetails.HealthCard
-            };
+                participantIds.Add(p.UserId);
+            }
+            return participantIds;
+        }
 
+        public CreateTripHeader GetFullTrip(int id)
+        {
+            var trip = DbContext.Trips.Where(t => t.Id == id).FirstOrDefault();
+            return new CreateTripHeader
+            {
+                Id = trip.Id,
+                TripName = trip.TripName,
+                Starts = trip.Starts,
+                Ends = trip.Ends,
+                Description = trip.Description,
+                ParticipantIds = GetParticipantIdsOfTrip(id),
+                TripOwnerId = trip.TripOwnerId
+            };
         }
 
         public TripHeader GetTrip(int id)
@@ -197,14 +200,8 @@ namespace MyTravelBook.Dal.Services
             existingTrip.TripName = trip.TripName;
             existingTrip.Starts = trip.Starts;
             existingTrip.Ends = trip.Ends;
-
-            var documentOfTrip = DbContext.Documents.Where(d => d.Id == existingTrip.DocumentId).FirstOrDefault();
-            documentOfTrip.IdCard = trip.TripDetails.IDCard;
-            documentOfTrip.InternationalPassport = trip.TripDetails.InternationalPassport;
-            documentOfTrip.DrivingLicense = trip.TripDetails.DrivingLicense;
-            documentOfTrip.HealthCard = trip.TripDetails.HealthCard;
+            existingTrip.Description = trip.Description;
             
-            DbContext.Documents.Update(documentOfTrip);
             DbContext.Trips.Update(existingTrip);
             DbContext.SaveChanges();
         }

@@ -46,7 +46,7 @@ namespace MyTravelBook.Dal
                     TripName = "Split",
                     Starts = new DateTime(2021, 06, 04),
                     Ends = new DateTime(2021, 06, 11),
-                    DocumentId = 1,
+                    Description = "Splitbe megyünk",
                     TripOwnerId = 1
                 },
                 new Trip
@@ -55,7 +55,7 @@ namespace MyTravelBook.Dal
                     TripName = "Balaton",
                     Starts = new DateTime(2021, 06, 11),
                     Ends = new DateTime(2021, 06, 13),
-                    DocumentId = 2,
+                    Description = "Balcsira megyünk",
                     TripOwnerId = 1
                 });
 

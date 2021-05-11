@@ -10,7 +10,7 @@ namespace MyTravelBook.Dal.Dto
         public string TripName { get; set; }
         public DateTime Starts { get; set; }
         public DateTime Ends { get; set; }
-        public TripDetailsHeader TripDetails { get; set; }
+        public string Description { get; set; }
         public List<int> ParticipantIds { get; set; }
         public int TripOwnerId { get; set; }
     }

@@ -14,7 +14,7 @@ namespace MyTravelBook.Web.Pages
 {
     public class TripModel : PageModel
     {
-        public TripHeader Trip { get; set; }
+        public CreateTripHeader Trip { get; set; }
         public TripDetailsHeader TripDetails { get; set; }
         public TravelsHeader Travels { get; set; }
         public AccommodationsHeader Accommodations { get; set; }
@@ -52,7 +52,7 @@ namespace MyTravelBook.Web.Pages
         {
             if (Id != null)
             {
-                Trip = this.tripService.GetTrip(Id);
+                Trip = this.tripService.GetFullTrip(Id);
                 Travels = this.tripService.GetTravelsOfTrip(Id);
                 Accommodations = this.tripService.GetAccommodationsOfTrip(Id);
                 Expenses = this.tripService.GetExpensesOfTrip(Id);
