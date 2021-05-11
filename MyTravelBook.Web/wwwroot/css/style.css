@@ -21,6 +21,10 @@
     background-image: url(../images/accommodation-page.jpg);
 }
 
+.expense-page {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../images/expense-page.jpg);
+}
+
 .glassy {
     justify-content: center;
     text-align: center;

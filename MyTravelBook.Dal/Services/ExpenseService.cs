@@ -61,6 +61,7 @@ namespace MyTravelBook.Dal.Services
             {
                 participantIds.Add(participant.UserId);
             }
+            var pricePerCapita = CalculateCost(expense, participantIds.Count);
             return new ExpenseHeader
             {
                 Id = expense.Id,
@@ -69,8 +70,14 @@ namespace MyTravelBook.Dal.Services
                 ExpenseName = expense.ExpenseName,
                 Description = expense.Description,
                 Price = expense.Price,
-                ParticipantIds = participantIds
+                ParticipantIds = participantIds,
+                PricePerCapita = pricePerCapita
             };
+        }
+
+        public decimal CalculateCost(Expense expense, int numOfParticipants)
+        {
+            return new decimal(expense.Price / numOfParticipants);
         }
 
         // Update

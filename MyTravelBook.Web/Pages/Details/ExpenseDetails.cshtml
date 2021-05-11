@@ -1,0 +1,116 @@
+﻿@page
+@model MyTravelBook.Web.Pages.Details.ExpenseDetailsModel
+@{
+}
+<html>
+<head>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="expense-page background">
+    <div class="row no-gutters bubble-row mt-5">
+        <div class="col-3 glassy mr-auto">
+            <div class="container">
+                <h3>
+                    Expenses
+                </h3>
+                <div class="row no-gutters">
+                    <div class="col-2 ml-auto mr-auto">
+                        Location
+                    </div>
+                    <div class="col-4 ml-auto mr-auto">
+                        Name
+                    </div>
+                    <div class="col-2 ml-auto mr-auto">
+                        Price
+                    </div>
+                </div>
+                @foreach (var expense in Model.Expenses.Expenses)
+                {
+                    <a asp-page="ExpenseDetails" asp-route-id="@expense.Id" class="row no-gutters selectable-row">
+                        <div class="col-2 ml-auto mr-auto">
+                            @expense.Location
+                        </div>
+                        <div class="col-4 ml-auto mr-auto">
+                            @expense.ExpenseName
+                        </div>
+                        <div class="col-2 ml-auto mr-auto">
+                            @expense.Price €
+                        </div>
+                    </a>
+                }
+                <a class="btn btn-dark mt-2" asp-page="/Add/Expense" asp-route-id="@Model.Expense.TripId">
+                    Add new
+                </a>
+            </div>
+        </div>
+        <div class="col-5 glassy ml-auto mr-auto">
+            <div class="container" style="text-align: left;">
+                <h3 style="text-align: center;">
+                    Expense manager
+                </h3>
+                <div class="row">
+                    <div class="col-7">
+                        <h5 style="text-align: center;">
+                            Essentials
+                        </h5>
+                        <div class="row mb-1">
+                            <div class="col-6">
+                                Location: @Model.Expense.Location
+                            </div>
+                            <div class="col-6">
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-6">
+                                Expense Name: @Model.Expense.ExpenseName
+                            </div>
+                            <div class="col-6">
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-12">
+                                Description:
+                                @Model.Expense.Description
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <h5 style="text-align: center;">
+                            Summary
+                        </h5>
+                        <div class="col-12" style="text-align: left;">
+                            Participants: @Model.Expense.ParticipantIds.Count
+                            Price: @Model.Expense.Price €
+                            Price/capita: @Model.Expense.PricePerCapita €
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3 glassy ml-auto">
+            <div class="container">
+                <h3>
+                    Participants
+                </h3>
+                <div class="row h-75">
+                    <div class="col-12">
+                        <select class="custom-select participant-selector h-100" multiple="multiple">
+                            @foreach (var p in Model.Participants.FriendsList)
+                            {
+                                <option>@p.Nickname</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row no-gutters">
+        <div class="col-12" style="text-align: center;">
+            <a class="btn btn-dark mt-2" asp-page="/Trip" asp-route-id="@Model.Expense.TripId">
+                Back to trip
+            </a>
+        </div>
+    </div>
+</body>
+</html>

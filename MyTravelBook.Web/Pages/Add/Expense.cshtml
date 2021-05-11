@@ -7,7 +7,7 @@
     <link href="/css/style.css" rel="stylesheet" type="text/css" />
 </head>
 <form method="post">
-    <body class="trip-background background">
+    <body class="expense-page background">
         <div class="row no-gutters bubble-row mt-5">
             <div class="col-3 glassy mr-auto">
                 <div class="container">
@@ -105,6 +105,13 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="row no-gutters">
+            <div class="col-12" style="text-align: center;">
+                <a class="btn btn-dark mt-2" asp-page="/Trip" asp-route-id="@Model.Id">
+                    Back to trip
+                </a>
             </div>
         </div>
     </body>
