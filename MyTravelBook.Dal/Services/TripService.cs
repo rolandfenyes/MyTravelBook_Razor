@@ -30,13 +30,31 @@ namespace MyTravelBook.Dal.Services
             var tripEntity = new Trip
             {
                 TripName = trip.TripName,
-                Starts = trip.Starts,
-                Ends = trip.Ends,
+                Starts = new DateTime(int.Parse(trip.StartYear), int.Parse(trip.StartMonth), int.Parse(trip.StartDay)),
+                Ends = new DateTime(int.Parse(trip.EndYear), int.Parse(trip.EndMonth), int.Parse(trip.EndDay)),
                 Description = trip.Description,
                 TripOwnerId = trip.TripOwnerId
             };
-            DbContext.SaveChanges();
             DbContext.Trips.Add(tripEntity);
+            DbContext.SaveChanges();
+
+            DbContext.TripParticipants.Add(
+                    new TripParticipants
+                    {
+                        TripId = tripEntity.Id,
+                        UserId = tripEntity.TripOwnerId
+                    });
+
+            foreach (var p in trip.ParticipantIds)
+            {
+                DbContext.TripParticipants.Add(
+                    new TripParticipants
+                    {
+                        TripId = tripEntity.Id,
+                        UserId = p
+                    });
+            }
+
             DbContext.SaveChanges();
 
             return tripEntity.Id;
@@ -58,6 +76,24 @@ namespace MyTravelBook.Dal.Services
         }
 
         // Read
+
+        public FriendsHeader GetFriends(int userId)
+        {
+            var friends = DbContext.Friends.Where(f => f.UserId1 == userId || f.UserId2 == userId).ToList();
+            var friendsHeader = new FriendsHeader();
+            friendsHeader.FriendsList = new List<FriendHeader>();
+            foreach (var friend in friends)
+            {
+                var id = friend.UserId1 == userId ? friend.UserId2 : friend.UserId1;
+                friendsHeader.FriendsList.Add(
+                    new FriendHeader
+                    {
+                        FriendId = id,
+                        Nickname = DbContext.Users.Where(u => u.Id == id).FirstOrDefault().Name
+                    });
+            }
+            return friendsHeader;
+        }
 
         public ExpensesHeader GetExpensesOfTrip(int tripId)
         {
@@ -180,9 +216,15 @@ namespace MyTravelBook.Dal.Services
         public string GetLocation(int tripId)
         {
             var accommodationIds = DbContext.TripAccommodations.Where(t => t.TripId == tripId).ToList();
-            var accommodation = DbContext.Accommodations.Where(a => a.Id == accommodationIds[accommodationIds.Count - 1].AccommodationId).FirstOrDefault();
-
-            return accommodation.Location;
+            if (accommodationIds.Count != 0)
+            {
+                var accommodation = DbContext.Accommodations.Where(a => a.Id == accommodationIds[accommodationIds.Count - 1].AccommodationId).FirstOrDefault();
+                return accommodation.Location;
+            }
+            else
+            {
+                return "Not available";
+            }
         }
 
         public string GetProgress(Trip trip)

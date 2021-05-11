@@ -15,7 +15,7 @@ namespace MyTravelBook.Web.Pages
     public class CreateTripModel : PageModel
     {
         private TripService tripService { get; }
-        private UserManager<User> UserManager { get; }
+        public UserManager<User> UserManager { get; }
         public int UserId { get; set; }
 
         public SelectList SelectableParticipants { get; set; }
@@ -34,18 +34,33 @@ namespace MyTravelBook.Web.Pages
 
         public async Task OnGetAsync()
         {
+            UserId = await GetUserId();
+            var participants = this.tripService.GetFriends(UserId);
+            SelectableParticipants = new SelectList(participants.FriendsList, nameof(FriendHeader.FriendId), nameof(FriendHeader.Nickname));
+
+        }
+
+        public async Task<int> GetUserId()
+        {
             var userId = await UserManager.GetUserAsync(User);
 
             if (userId != null)
             {
-                UserId = userId.Id;
+                return UserId = userId.Id;
+            } 
+            else
+            {
+                return 0;
             }
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
             // TODO
-
+            if (UserId == 0)
+            {
+                UserId = await GetUserId();
+            }
             NewTrip.TripOwnerId = UserId;
             NewTrip.ParticipantIds = SelectedParticipants.ToList();
             var tripId = this.tripService.CreateNewTrip(NewTrip);

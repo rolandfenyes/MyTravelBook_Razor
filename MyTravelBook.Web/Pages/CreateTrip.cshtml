@@ -2,3 +2,102 @@
 @model MyTravelBook.Web.Pages.CreateTripModel
 @{
 }
+<html>
+<head>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<form method="post">
+    <body class="background trip-background">
+        <div class="row no-gutters mb-5">
+            <div class="col-3 ml-auto mr-2">
+                <div class="glassy">
+                    <div class="container">
+                        <h3>
+                            New trip
+                        </h3>
+                        <input class="form-control" type="text" asp-for="@Model.NewTrip.TripName" placeholder="Trip name" />
+                        <label for="start-date">Starts</label>
+                        <div class="row" id="start-date">
+                            <div class="col-3" style="padding-right:0px;">
+                                <input class="form-control" type="text" asp-for="@Model.NewTrip.StartDay" placeholder="dd" />
+                            </div>
+                            <div class="col-1" style="padding:0px;">
+                                <h3>
+                                    /
+                                </h3>
+                            </div>
+                            <div class="col-3" style="padding:0px;">
+                                <input class="form-control" type="text" asp-for="@Model.NewTrip.StartMonth" placeholder="mm" />
+                            </div>
+                            <div class="col-1" style="padding:0px;">
+                                <h3>
+                                    /
+                                </h3>
+                            </div>
+                            <div class="col-4" style="padding-left:0px;">
+                                <input class="form-control" type="text" asp-for="@Model.NewTrip.StartYear" placeholder="yyyy" />
+                            </div>
+                        </div>
+
+                        <label for="start-date">Ends</label>
+                        <div class="row mb-1" id="start-date">
+                            <div class="col-3" style="padding-right:0px;">
+                                <input class="form-control" type="text" asp-for="@Model.NewTrip.EndDay" placeholder="dd" />
+                            </div>
+                            <div class="col-1" style="padding:0px;">
+                                <h3>
+                                    /
+                                </h3>
+                            </div>
+                            <div class="col-3" style="padding:0px;">
+                                <input class="form-control" type="text" asp-for="@Model.NewTrip.EndMonth" placeholder="mm" />
+                            </div>
+                            <div class="col-1" style="padding:0px;">
+                                <h3>
+                                    /
+                                </h3>
+                            </div>
+                            <div class="col-4" style="padding-left:0px;">
+                                <input class="form-control" type="text" asp-for="@Model.NewTrip.EndYear" placeholder="yyyy" />
+                            </div>
+                        </div>
+                        <textarea style="resize: none;" class="form-control" type="text" asp-for="@Model.NewTrip.Description" placeholder="Description" rows="3"></textarea>
+                        <button class="btn btn-dark mt-2">
+                            Create trip
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 ml-2 mr-auto">
+                <div class="glassy">
+                    <div class="container">
+                        <h3>
+                            Participants
+                        </h3>
+                        @if (Model.SelectableParticipants.Count() == 0)
+                        {
+                            <h6>
+                                It looks like you have no friends.
+                            </h6>
+                        }
+                        else
+                        {
+                            <select class="custom-select participant-selector h-100" asp-for="@Model.SelectedParticipants" multiple="multiple">
+                                @foreach (var p in Model.SelectableParticipants)
+                                {
+                                    <option value="@p.Value">@p.Text</option>
+                                }
+                            </select>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="text-align:center">
+            
+        </div>
+        
+    </body>
+</form>
+</html>
