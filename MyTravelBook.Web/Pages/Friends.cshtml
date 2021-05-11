@@ -1,0 +1,60 @@
+﻿@page
+@model MyTravelBook.Web.Pages.FriendsModel
+@{
+}
+<html>
+<head>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="friends-background background">
+    <div class="row no-gutters">
+        <div class="col-4 ml-auto mr-auto">
+            <div class="glassy">
+                <div class="container">
+                    <h3>
+                        Friends
+                    </h3>
+                    @if (Model.Friends.FriendsList.Count == 0)
+                    {
+                        <h5>
+                            It seems like you have no friends.
+                        </h5>
+                    }
+                    else
+                    {
+                        @foreach (var f in Model.Friends.FriendsList)
+                        {
+                            <option>@f.Nickname</option>
+                        }
+                    }
+                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addNewFriend">Add new friend</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<div class="modal fade" id="addNewFriend" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add friend</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="nickname" class="col-form-label">Nickname</label>
+                        <input type="text" asp-for="@Model.NewFriend.Nickname" type="text" class="form-control" id="nickname">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Send friend request</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</html>

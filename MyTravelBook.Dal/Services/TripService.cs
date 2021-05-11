@@ -308,6 +308,32 @@ namespace MyTravelBook.Dal.Services
             DbContext.SaveChanges();
         }
 
+        public bool AddFriend(int userId, string nickname)
+        {
+            var newFriend = DbContext.Users.Where(u => u.Name == nickname).FirstOrDefault();
+            // check if not exists
+            if (newFriend == null)
+            {
+                return false;
+            }
+
+            var friendList = DbContext.Friends.Where(u => u.UserId1 == userId || u.UserId2 == userId).ToList();
+            // check if already a friend
+            if (friendList.Select(u => u.UserId1).Contains(newFriend.Id))
+            {
+                return false;
+            }
+
+            DbContext.Friends.Add(
+                new Friend
+                {
+                    UserId1 = userId,
+                    UserId2 = newFriend.Id
+                });
+            DbContext.SaveChanges();
+            return true;
+        }
+
         // Delete
         public void DeleteTripById(int tripId)
         {

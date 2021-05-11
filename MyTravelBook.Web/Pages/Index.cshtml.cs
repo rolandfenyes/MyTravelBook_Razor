@@ -36,6 +36,7 @@ namespace MyTravelBook.Web.Pages
                 TripService = tripService;
                 var userId = await this.userManager.GetUserAsync(User);
                 Trips = await tripService.GetTrips(userId.Id);
+                
             }
             
             return Page();
