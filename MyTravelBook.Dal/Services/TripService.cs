@@ -357,5 +357,19 @@ namespace MyTravelBook.Dal.Services
             DbContext.SaveChanges();
         }
 
+        public void RemoveTravelFromTrip(int travelId)
+        {
+            DbContext.TripTravels.Remove(DbContext.TripTravels.Where(t => t.TravelId == travelId).FirstOrDefault());
+            var travelParticipants = DbContext.TravelParticipants.Where(p => p.TravelId == travelId).ToList();
+            foreach (var tp in travelParticipants)
+            {
+                DbContext.TravelParticipants.Remove(tp);
+            }
+                
+            DbContext.Travels.Remove(DbContext.Travels.Where(t => t.Id == travelId).FirstOrDefault());
+            DbContext.SaveChanges();
+
+        }
+
     }
 }
