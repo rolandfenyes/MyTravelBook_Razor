@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ganss.XSS;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -56,6 +57,14 @@ namespace MyTravelBook.Web.Pages.Details
             {
                 NewAccommodation = (AccommodationHeader)AddParticipantsToHeader(NewAccommodation);
                 NewAccommodation.TripId = Id;
+                NewAccommodation.Location = new HtmlSanitizer().Sanitize(NewAccommodation.Location);
+                NewAccommodation.StartDay = new HtmlSanitizer().Sanitize(NewAccommodation.StartDay);
+                NewAccommodation.StartMonth = new HtmlSanitizer().Sanitize(NewAccommodation.StartMonth);
+                NewAccommodation.StartYear = new HtmlSanitizer().Sanitize(NewAccommodation.StartYear);
+                NewAccommodation.EndDay = new HtmlSanitizer().Sanitize(NewAccommodation.EndDay);
+                NewAccommodation.EndMonth = new HtmlSanitizer().Sanitize(NewAccommodation.EndMonth);
+                NewAccommodation.EndYear = new HtmlSanitizer().Sanitize(NewAccommodation.EndYear);
+
                 this.tripService.CreateNewAccommodation(NewAccommodation);
             }
             return RedirectToPage("/Trip", new { id = Id });

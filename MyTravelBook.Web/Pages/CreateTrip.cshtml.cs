@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ganss.XSS;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -62,6 +63,15 @@ namespace MyTravelBook.Web.Pages
                 UserId = await GetUserId();
             }
             NewTrip.TripOwnerId = UserId;
+            NewTrip.TripName = new HtmlSanitizer().Sanitize(NewTrip.TripName);
+            NewTrip.StartDay = new HtmlSanitizer().Sanitize(NewTrip.StartDay);
+            NewTrip.StartMonth = new HtmlSanitizer().Sanitize(NewTrip.StartMonth);
+            NewTrip.StartYear = new HtmlSanitizer().Sanitize(NewTrip.StartYear);
+            NewTrip.EndDay = new HtmlSanitizer().Sanitize(NewTrip.EndDay);
+            NewTrip.EndMonth = new HtmlSanitizer().Sanitize(NewTrip.EndMonth);
+            NewTrip.EndYear = new HtmlSanitizer().Sanitize(NewTrip.EndYear);
+            NewTrip.Description = new HtmlSanitizer().Sanitize(NewTrip.Description);
+
             NewTrip.ParticipantIds = SelectedParticipants.ToList();
             var tripId = this.tripService.CreateNewTrip(NewTrip);
 

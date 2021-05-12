@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ganss.XSS;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -56,6 +57,10 @@ namespace MyTravelBook.Web.Pages.Details
             {
                 NewExpense = (ExpenseHeader)AddParticipantsToHeader(NewExpense);
                 NewExpense.TripId = Id;
+                NewExpense.Location = new HtmlSanitizer().Sanitize(NewExpense.Location);
+                NewExpense.ExpenseName = new HtmlSanitizer().Sanitize(NewExpense.ExpenseName);
+                NewExpense.Description = new HtmlSanitizer().Sanitize(NewExpense.Description);
+
                 this.tripService.CreateNewExpense(NewExpense);
             }
             return RedirectToPage("/Trip", new { id = Id });

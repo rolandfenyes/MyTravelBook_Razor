@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ganss.XSS;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -71,6 +72,14 @@ namespace MyTravelBook.Web.Pages.Edit
             else
             {
                 Trip.Id = Id;
+                Trip.TripName = new HtmlSanitizer().Sanitize(Trip.TripName);
+                Trip.StartDay = new HtmlSanitizer().Sanitize(Trip.StartDay);
+                Trip.StartMonth = new HtmlSanitizer().Sanitize(Trip.StartMonth);
+                Trip.StartYear = new HtmlSanitizer().Sanitize(Trip.StartYear);
+                Trip.EndDay = new HtmlSanitizer().Sanitize(Trip.EndDay);
+                Trip.EndMonth = new HtmlSanitizer().Sanitize(Trip.EndMonth);
+                Trip.EndYear = new HtmlSanitizer().Sanitize(Trip.EndYear);
+                Trip.Description = new HtmlSanitizer().Sanitize(Trip.Description);
                 this.tripService.UpdateExistingTrip(Trip);
             }
             return RedirectToPage("/Trip", new { id = Id });

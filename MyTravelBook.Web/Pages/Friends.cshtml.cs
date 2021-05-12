@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ganss.XSS;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -43,6 +44,7 @@ namespace MyTravelBook.Web.Pages
         public async Task<IActionResult> OnPostAsync()
         {
             UserId = await GetUserId();
+            NewFriend.Nickname = new HtmlSanitizer().Sanitize(NewFriend.Nickname);
             this.tripService.AddFriend(UserId, NewFriend.Nickname);
             return RedirectToPage("Friends");
         }
