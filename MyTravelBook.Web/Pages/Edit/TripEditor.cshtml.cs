@@ -67,7 +67,11 @@ namespace MyTravelBook.Web.Pages.Edit
                     UserId = await GetUserId();
                 }
                 this.tripService.RemoveParticipantFromTrip(Id, SelectedParticipants[0]);
-
+            }
+            else
+            {
+                Trip.Id = Id;
+                this.tripService.UpdateExistingTrip(Trip);
             }
             return RedirectToPage("/Trip", new { id = Id });
         }

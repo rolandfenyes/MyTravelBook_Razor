@@ -300,8 +300,8 @@ namespace MyTravelBook.Dal.Services
         {
             var existingTrip = DbContext.Trips.Where(t => t.Id == trip.Id).FirstOrDefault();
             existingTrip.TripName = trip.TripName;
-            existingTrip.Starts = trip.Starts;
-            existingTrip.Ends = trip.Ends;
+            existingTrip.Starts = new DateTime(int.Parse(trip.StartYear), int.Parse(trip.StartMonth), int.Parse(trip.StartDay));
+            existingTrip.Ends = new DateTime(int.Parse(trip.EndYear), int.Parse(trip.EndMonth), int.Parse(trip.EndDay));
             existingTrip.Description = trip.Description;
             
             DbContext.Trips.Update(existingTrip);
