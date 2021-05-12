@@ -3,6 +3,11 @@
 @{
     //ViewData["Title"] = Model.Trip.TripName;
 }
+@using Microsoft.AspNetCore.Identity
+@using MyTravelBook.Dal.Entities
+
+@inject UserManager<User> UserManager
+
 <html>
 <head>
     <link href="/css/style.css" rel="stylesheet" type="text/css" />
@@ -29,6 +34,13 @@
                 <p style="text-align: left;">
                     @Model.Trip.Description
                 </p>
+                @if (Model.Trip.TripOwnerId == UserManager.GetUserAsync(User).Result.Id)
+                {
+                    <a class="btn btn-dark" asp-page="/Edit/TripEditor" asp-route-id="@Model.Id">
+                        Edit
+                    </a>
+                }
+
             </div>
         </div>
         <div class="col-5 glassy ml-auto mr-auto">
@@ -98,9 +110,13 @@
                         </h5>
                     </div>
                 }
-                <button type="button" class="add-btn btn btn-dark" data-toggle="modal" data-target="#addParticipant">
-                    Add
-                </buttontype="button">
+                @if (Model.Trip.TripOwnerId == UserManager.GetUserAsync(User).Result.Id)
+                {
+                    <button type="button" class="add-btn btn btn-dark" data-toggle="modal" data-target="#addParticipant">
+                        Add
+                    </button>
+                }
+                
             </div>
 
         </div>
@@ -224,7 +240,7 @@
             <form method="post">
                 <div class="modal-body">
                     <h3>
-                        Participants
+                        Friend list
                     </h3>
                     @if (Model.SelectableParticipants.Count() == 0)
                     {

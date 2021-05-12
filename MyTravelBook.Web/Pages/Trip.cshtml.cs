@@ -65,7 +65,30 @@ namespace MyTravelBook.Web.Pages
                     UserId = userId.Id;
                 }
 
-                SelectableParticipants = new SelectList(this.tripService.GetFriends(UserId).FriendsList, nameof(FriendHeader.FriendId), nameof(FriendHeader.Nickname));
+                var friends = this.tripService.GetFriends(UserId).FriendsList;
+                var participantIds = Participants.FriendsList.Select(p => p.FriendId);
+                
+                if (friends == null)
+                {
+                    friends = new List<FriendHeader>();
+                }
+                else
+                {
+                    foreach (var friend in friends)
+                    {
+                        if (participantIds.Contains(friend.FriendId))
+                        {
+                            friends.Remove(friend);
+                        }
+                        if (friends.Count == 0)
+                        {
+                            break;
+                        }
+                    }
+                }
+
+                SelectableParticipants = new SelectList(friends, nameof(FriendHeader.FriendId), nameof(FriendHeader.Nickname));
+
 
                 TripOverall = this.tripService.GetOverallOfTrip(Id, UserId);
 

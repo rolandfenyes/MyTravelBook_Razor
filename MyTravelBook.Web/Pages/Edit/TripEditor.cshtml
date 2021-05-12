@@ -1,0 +1,138 @@
+﻿@page
+@model MyTravelBook.Web.Pages.Edit.TripEditorModel
+@{
+}
+@using Microsoft.AspNetCore.Identity
+@using MyTravelBook.Dal.Entities
+
+@inject UserManager<User> UserManager
+<html>
+<head>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<form method="post">
+    <body class="background trip-background">
+        <div class="row no-gutters mb-5">
+            <div class="col-3 ml-auto mr-2">
+                <div class="glassy" style="height: 400px;">
+                    <div class="container">
+                        <h3>
+                            Edit trip
+                        </h3>
+                        <input class="form-control" type="text" asp-for="@Model.Trip.TripName" value="@Model.Trip.TripName" placeholder="Trip name" />
+                        <label for="start-date">Starts</label>
+                        <div class="row" id="start-date">
+                            <div class="col-3" style="padding-right:0px;">
+                                <input class="form-control" type="text" asp-for="@Model.Trip.StartDay" value="@Model.Trip.Starts.Day" placeholder="dd" />
+                            </div>
+                            <div class="col-1" style="padding:0px;">
+                                <h3>
+                                    /
+                                </h3>
+                            </div>
+                            <div class="col-3" style="padding:0px;">
+                                <input class="form-control" type="text" asp-for="@Model.Trip.StartMonth" value="@Model.Trip.Starts.Month" placeholder="mm" />
+                            </div>
+                            <div class="col-1" style="padding:0px;">
+                                <h3>
+                                    /
+                                </h3>
+                            </div>
+                            <div class="col-4" style="padding-left:0px;">
+                                <input class="form-control" type="text" asp-for="@Model.Trip.StartYear" value="@Model.Trip.Starts.Year" placeholder="yyyy" />
+                            </div>
+                        </div>
+
+                        <label for="start-date">Ends</label>
+                        <div class="row mb-1" id="start-date">
+                            <div class="col-3" style="padding-right:0px;">
+                                <input class="form-control" type="text" asp-for="@Model.Trip.EndDay" value="@Model.Trip.Ends.Day" placeholder="dd" />
+                            </div>
+                            <div class="col-1" style="padding:0px;">
+                                <h3>
+                                    /
+                                </h3>
+                            </div>
+                            <div class="col-3" style="padding:0px;">
+                                <input class="form-control" type="text" asp-for="@Model.Trip.EndMonth" value="@Model.Trip.Ends.Month" placeholder="mm" />
+                            </div>
+                            <div class="col-1" style="padding:0px;">
+                                <h3>
+                                    /
+                                </h3>
+                            </div>
+                            <div class="col-4" style="padding-left:0px;">
+                                <input class="form-control" type="text" asp-for="@Model.Trip.EndYear" value="@Model.Trip.Ends.Year" placeholder="yyyy" />
+                            </div>
+                        </div>
+                        <textarea style="resize: none;" class="form-control" type="text" asp-for="@Model.Trip.Description" placeholder="Description" rows="3"></textarea>
+                        <button class="btn btn-dark mt-2">
+                            Save changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 ml-2 mr-auto">
+                <div class="glassy" style="height: 400px;">
+                    <div class="container">
+                        <h3>
+                            Participants
+                        </h3>
+                        @if (Model.SelectableParticipants.Count() == 0)
+                        {
+                            <h6>
+                                It looks like you have no friends.
+                            </h6>
+                        }
+                        else
+                        {
+                            <select class="custom-select participant-selector h-75" asp-for="@Model.SelectedParticipants">
+                                @foreach (var p in Model.AllParticipants)
+                                {
+                                    <option value="@p.Value">@p.Text</option>
+                                }
+                            </select>
+                        }
+                        @if (Model.Trip.TripOwnerId == UserManager.GetUserAsync(User).Result.Id)
+                        {
+                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#removeParticipants">
+                                Remove participants
+                            </button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row no-gutters">
+            <div class="col-12" style="text-align: center;">
+                <a class="btn btn-dark mt-2" asp-page="/Trip" asp-route-id="@Model.Id">
+                    Back to trip
+                </a>
+            </div>
+        </div>
+
+    </body>
+    <div class="modal fade" id="removeParticipants" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add friend</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5>
+                        Are you sure?
+                    </h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-dark">Remove from trip</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+</html>

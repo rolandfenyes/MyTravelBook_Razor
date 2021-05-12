@@ -351,5 +351,11 @@ namespace MyTravelBook.Dal.Services
             // TODO cascade deleting
         }
 
+        public void RemoveParticipantFromTrip(int tripId, int userId)
+        {
+            DbContext.TripParticipants.Remove(DbContext.TripParticipants.Where(t => t.TripId == tripId && t.UserId == userId).FirstOrDefault());
+            DbContext.SaveChanges();
+        }
+
     }
 }
