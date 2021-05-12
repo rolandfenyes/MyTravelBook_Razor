@@ -16,6 +16,8 @@ namespace MyTravelBook.Web.Pages.Details
         [BindProperty(SupportsGet = true)]
         public int Id { get; set; }
         public int UserId { get; set; }
+        public int TripOwnerId { get; set; }
+        public int TripId { get; set; }
         private TripService tripService { get; }
         private UserManager<User> UserManager { get; }
 
@@ -32,7 +34,8 @@ namespace MyTravelBook.Web.Pages.Details
         public async Task OnGetAsync()
         {
             Expense = this.tripService.ExpenseService.GetExpense(Id);
-            
+            TripOwnerId = this.tripService.GetFullTrip((int)Expense.TripId).TripOwnerId;
+            TripId = (int)this.tripService.GetFullTrip((int)Expense.TripId).Id;
             Expenses = this.tripService.GetExpensesOfTrip((int)Expense.TripId);
             Participants = this.tripService.ExpenseService.GetParticipantsOfExpense(Expense.Id);
             var userId = await UserManager.GetUserAsync(User);
@@ -42,5 +45,14 @@ namespace MyTravelBook.Web.Pages.Details
                 UserId = userId.Id;
             }
         }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            Expense = this.tripService.ExpenseService.GetExpense(Id);
+            var expenseId = (int)this.tripService.GetFullTrip((int)Expense.TripId).Id;
+            this.tripService.RemoveExpenseFromTrip(Id);
+            return RedirectToPage("/Trip", new { id = expenseId });
+        }
+
     }
 }

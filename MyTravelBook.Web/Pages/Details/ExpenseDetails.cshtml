@@ -2,6 +2,11 @@
 @model MyTravelBook.Web.Pages.Details.ExpenseDetailsModel
 @{
 }
+@using Microsoft.AspNetCore.Identity
+@using MyTravelBook.Dal.Entities
+
+@inject UserManager<User> UserManager
+
 <html>
 <head>
     <link href="/css/style.css" rel="stylesheet" type="text/css" />
@@ -85,6 +90,16 @@
                         </div>
                     </div>
                 </div>
+                @if (Model.TripOwnerId == UserManager.GetUserAsync(User).Result.Id)
+                {
+                    <div class="row mb-1">
+                        <div class="col-12" style="text-align: center;">
+                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#removeExpense">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
         <div class="col-3 glassy ml-auto">
@@ -113,4 +128,30 @@
         </div>
     </div>
 </body>
+<div class="modal fade" id="removeExpense" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add friend</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post">
+                <div class="modal-body">
+                    <h3>
+                        Remove Expense
+                    </h3>
+                    <h5>
+                        Are you sure removing expense named @Model.Expense.ExpenseName?
+                    </h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Remove expense</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </html>
