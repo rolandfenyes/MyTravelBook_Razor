@@ -19,9 +19,9 @@ namespace MyTravelBook.Dal.SeedService
 
         public async Task SeedRoleAsync()
         {
-            if (!await roleManager.RoleExistsAsync(Roles.Roles.Administrator))
-                await roleManager.CreateAsync(new IdentityRole<int> { Name = Roles.Roles.Administrator });
-            
+            if (!await roleManager.RoleExistsAsync(Roles.Roles.User))
+                await roleManager.CreateAsync(new IdentityRole<int> { Name = Roles.Roles.User });
+
         }
     }
 }

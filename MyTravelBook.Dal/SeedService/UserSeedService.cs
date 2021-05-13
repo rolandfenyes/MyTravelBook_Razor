@@ -20,7 +20,7 @@ namespace MyTravelBook.Dal.SeedService
 
         public async Task SeedUserAsync()
         {
-            if (!(await userManager.GetUsersInRoleAsync(Roles.Roles.Administrator)).Any())
+            if (!(await userManager.GetUsersInRoleAsync(Roles.Roles.User)).Any())
             {
                 var user = new User
                 {
@@ -31,7 +31,7 @@ namespace MyTravelBook.Dal.SeedService
                 };
 
                 var createResult = await userManager.CreateAsync(user, "#Administrator123");
-                var addToRoleResult = await userManager.AddToRoleAsync(user, Roles.Roles.Administrator);
+                var addToRoleResult = await userManager.AddToRoleAsync(user, Roles.Roles.User);
 
                 if (!createResult.Succeeded || !addToRoleResult.Succeeded)
                 {

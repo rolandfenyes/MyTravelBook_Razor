@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using MyTravelBook.Dal.Entities;
+using MyTravelBook.Dal.Roles;
 
 namespace MyTravelBook.Web.Areas.Identity.Pages.Account
 {
@@ -128,6 +129,8 @@ namespace MyTravelBook.Web.Areas.Identity.Pages.Account
                 var user = new User { UserName = Input.Email, Email = Input.Email , Name = Input.Name};
 
                 var result = await _userManager.CreateAsync(user);
+                await _userManager.AddToRoleAsync(user, Roles.User);
+
                 if (result.Succeeded)
                 {
                     result = await _userManager.AddLoginAsync(user, info);

@@ -67,27 +67,24 @@ namespace MyTravelBook.Web.Pages
 
                 var friends = this.tripService.GetFriends(UserId).FriendsList;
                 var participantIds = Participants.FriendsList.Select(p => p.FriendId);
+                var friendsNotInTrip = new List<FriendHeader>();
                 
                 if (friends == null)
                 {
-                    friends = new List<FriendHeader>();
+                    friendsNotInTrip = new List<FriendHeader>();
                 }
                 else
                 {
                     foreach (var friend in friends)
                     {
-                        if (participantIds.Contains(friend.FriendId))
+                        if (!participantIds.Contains(friend.FriendId))
                         {
-                            friends.Remove(friend);
-                        }
-                        if (friends.Count == 0)
-                        {
-                            break;
+                            friendsNotInTrip.Add(friend);
                         }
                     }
                 }
 
-                SelectableParticipants = new SelectList(friends, nameof(FriendHeader.FriendId), nameof(FriendHeader.Nickname));
+                SelectableParticipants = new SelectList(friendsNotInTrip, nameof(FriendHeader.FriendId), nameof(FriendHeader.Nickname));
 
 
                 TripOverall = this.tripService.GetOverallOfTrip(Id, UserId);
@@ -108,20 +105,16 @@ namespace MyTravelBook.Web.Pages
             return RedirectToPage("/Trip", new { id = Id });
         }
 
-        public Header AddParticipantsToHeader(Header header)
+        public decimal GetTotalCosts()
         {
-            header.ParticipantIds = new List<int>();
-            foreach (var participantId in SelectedParticipants)
+            var total = new decimal(0);
+            foreach (var cost in TripOverall)
             {
-                header.ParticipantIds.Add(participantId);
+                total += cost.Total;
             }
-            return header;
+            return total;
         }
 
-        public bool IsNewTravelNull()
-        {
-            return (NewTravel != null && NewTravel.Departure != null && NewTravel.Destination != null);
-        }
 
     }
 }

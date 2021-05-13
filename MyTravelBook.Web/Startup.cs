@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MyTravelBook.Dal;
 using MyTravelBook.Dal.Entities;
+using MyTravelBook.Dal.Roles;
 using MyTravelBook.Dal.SeedInterfaces;
 using MyTravelBook.Dal.SeedService;
 using MyTravelBook.Dal.Services;
@@ -62,6 +63,34 @@ namespace MyTravelBook.Web
                 .AddScoped<TravelService>()
                 .AddScoped<AccommodationService>()
                 .AddScoped<ExpenseService>();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("User", policy => policy.RequireRole(Roles.User));
+            });
+
+            services.AddRazorPages(options =>
+            {
+                options.Conventions.AuthorizeFolder("/Add", "User");
+                options.Conventions.AuthorizeFolder("/Details", "User");
+                options.Conventions.AuthorizeFolder("/Edit", "User");
+                options.Conventions.AuthorizePage("/CreateTrip", "User");
+                options.Conventions.AuthorizePage("/Trip", "User");
+                options.Conventions.AuthorizePage("/Friends", "User");
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Events = new Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationEvents
+                {
+
+                    OnRedirectToAccessDenied = ctx =>
+                    {
+                        ctx.Response.Redirect("/Errors/Error");
+                        return Task.CompletedTask;
+                    }
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

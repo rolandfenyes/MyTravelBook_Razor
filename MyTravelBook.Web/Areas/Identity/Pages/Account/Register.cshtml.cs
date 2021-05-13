@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using MyTravelBook.Dal.Entities;
+using MyTravelBook.Dal.Roles;
 
 namespace MyTravelBook.Web.Areas.Identity.Pages.Account
 {
@@ -85,6 +86,7 @@ namespace MyTravelBook.Web.Areas.Identity.Pages.Account
             {
                 var user = new User { UserName = Input.UserName, Email = Input.Email, Name = Input.Name };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                await _userManager.AddToRoleAsync(user, Roles.User);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");

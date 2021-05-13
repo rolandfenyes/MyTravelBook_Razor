@@ -29,6 +29,17 @@
     background-image: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url(../images/friends-page.jpg);
 }
 
+.error-background {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url(../images/error-page.jpg);
+}
+
+.error {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .glassy {
     justify-content: center;
     text-align: center;
