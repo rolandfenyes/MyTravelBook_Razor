@@ -1,6 +1,7 @@
 ﻿@page
 @model MyTravelBook.Web.Pages.Details.TravelDetailsModel
 @{
+    ViewData["Title"] = "Travel";
 }
 @using Microsoft.AspNetCore.Identity
 @using MyTravelBook.Dal.Entities
@@ -94,15 +95,28 @@
                     </div>
                 </div>
                 <div class="row mb-1">
-                    <div class="col-4 form-group">
+                    <div class="col-4">
                         Transport Type: @Model.TravelType
                     </div>
                     <div class="col-4">
                         Luggage: @Model.Travel.LuggagePrice €
                     </div>
                     <div class="col-4">
-                        <div class="mb-2">
+                        <div>
                             Fuel: @Model.Travel.FuelPrice €/l
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-4 form-group">
+                        
+                    </div>
+                    <div class="col-4">
+                        
+                    </div>
+                    <div class="col-4">
+                        <div class="mb-2">
+                            Highway fee: @Model.Travel.HighwayFee €
                         </div>
                     </div>
                 </div>
@@ -120,7 +134,7 @@
                     </div>
                 </div>
                 @if (Model.TripOwnerId == UserManager.GetUserAsync(User).Result.Id)
-                { 
+                {
                     <div class="row mb-1">
                         <div class="col-12" style="text-align: center;">
                             <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#removeTravel">

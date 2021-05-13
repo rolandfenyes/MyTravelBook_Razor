@@ -16,5 +16,6 @@ namespace MyTravelBook.Dal.Entities
         public float Distance { get; set; }
         public float Consumption { get; set; }
         public float FuelPrice { get; set; }
+        public float HighwayFee { get; set; }
     }
 }

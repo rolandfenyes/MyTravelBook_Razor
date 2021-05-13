@@ -29,7 +29,8 @@ namespace MyTravelBook.Dal.Services
                 LuggagePrice = travelHeader.LuggagePrice != null ? (float)travelHeader.LuggagePrice : 0F,
                 Distance = travelHeader.Distance != null ? (float)travelHeader.Distance : 0F,
                 Consumption = travelHeader.Consumption != null ? (float)travelHeader.Consumption : 0F,
-                FuelPrice = travelHeader.FuelPrice != null ? (float)travelHeader.FuelPrice : 0F
+                FuelPrice = travelHeader.FuelPrice != null ? (float)travelHeader.FuelPrice : 0F,
+                HighwayFee = travelHeader.HighwayFee != null ? (float)travelHeader.HighwayFee : 0F
             };
             DbContext.Travels.Add(travel);
             DbContext.SaveChanges();
@@ -83,6 +84,7 @@ namespace MyTravelBook.Dal.Services
                     Distance = travel.Distance,
                     Consumption = travel.Consumption,
                     FuelPrice = travel.FuelPrice,
+                    HighwayFee = travel.HighwayFee,
                     ParticipantIds = participantIds,
                     TotalCost = totalCost,
                     CostPerCapita = costPerCapita
@@ -93,7 +95,7 @@ namespace MyTravelBook.Dal.Services
         {
             if ((int)travel.TransportType == 2)
             {
-                var carCost = decimal.Round(new decimal(((float)travel.Distance / 100 * (float)travel.Consumption * (float)travel.FuelPrice)));
+                var carCost = decimal.Round(new decimal(((float)travel.Distance / 100 * (float)travel.Consumption * (float)travel.FuelPrice) + (float)travel.HighwayFee));
                 if (isTotal)
                 {
                     return carCost;

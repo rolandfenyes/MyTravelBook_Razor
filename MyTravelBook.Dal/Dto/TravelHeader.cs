@@ -17,6 +17,7 @@ namespace MyTravelBook.Dal.Dto
         public float? Distance { get; set; }
         public float? Consumption { get; set; }
         public float? FuelPrice { get; set; }
+        public float? HighwayFee { get; set; }
 
         public decimal? TotalCost { get; set; }
         public decimal? CostPerCapita { get; set; }

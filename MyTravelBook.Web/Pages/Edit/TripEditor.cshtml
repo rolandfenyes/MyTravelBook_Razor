@@ -1,6 +1,7 @@
 ﻿@page
 @model MyTravelBook.Web.Pages.Edit.TripEditorModel
 @{
+    ViewData["Title"] = "Edit trip";
 }
 @using Microsoft.AspNetCore.Identity
 @using MyTravelBook.Dal.Entities
@@ -81,7 +82,7 @@
                         @if (Model.SelectableParticipants.Count() == 0)
                         {
                             <h6>
-                                It looks like you have no friends.
+                                It looks like you are a solo traveller.
                             </h6>
                         }
                         else

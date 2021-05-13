@@ -1,6 +1,7 @@
 ﻿@page
 @model MyTravelBook.Web.Pages.Details.TravelModel
 @{
+    ViewData["Title"] = "Add Travel";
 }
 
 <html>
@@ -103,6 +104,17 @@
                             <div class="mb-2">
                                 <input class="form-control" type="text" asp-for="@Model.NewTravel.FuelPrice" placeholder="Fuel price (€/l)" />
                             </div>
+                        </div>
+                    </div>
+                    <div class="row mb-1">
+                        <div class="col-4">
+                            
+                        </div>
+                        <div class="col-4">
+                            
+                        </div>
+                        <div class="col-4">
+                            <input class="form-control" type="text" asp-for="@Model.NewTravel.HighwayFee" placeholder="Highway fee" />
                         </div>
                     </div>
                     <div class="manager-add-button">
